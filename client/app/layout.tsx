@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   description:
     "NEZT es un estudio de tecnología que construye software, automatización e IA aplicada para empresas ambiciosas. Build. Connect. Scale.",
   icons: {
-    icon: "/neztlogo.png",
+    icon: [{ url: "/nezt-logo.svg", type: "image/svg+xml" }],
   },
   keywords: [
     "ingeniería de software",

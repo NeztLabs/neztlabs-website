@@ -6,7 +6,7 @@ type MonogramProps = {
 export function Monogram({ size = 40, className = "" }: MonogramProps) {
   return (
     <img
-      src="/neztlogo.png"
+      src="/nezt-logo.svg"
       width={size}
       height={size}
       alt="NEZT"
