@@ -5,6 +5,7 @@ export interface ProjectMetric {
 
 export interface Project {
   slug: string;
+  images: string[];
   title: string;
   client: string;
   sector: string;
@@ -400,6 +401,7 @@ export const es = {
   projects: [
     {
       slug: "museo-interactivo-venezuela",
+      images: ["/work/museo-hero.png", "/work/museo-dashboard.png"],
       title: "Plataforma Web Interactiva y CMS a Medida con Go y MongoDB",
       client: "Museo Patrimonial & Cultural",
       sector: "Patrimonio Cultural & Gestión Pública (Venezuela)",
@@ -439,6 +441,7 @@ export const es = {
     },
     {
       slug: "power-up-ecommerce",
+      images: ["/work/power-up.png"],
       title: "E-Commerce de Alto Rendimiento con Fidelización y Analítica en Tiempo Real",
       client: "Power Up",
       sector: "Salud, Nutrición & Functional Food",
@@ -476,7 +479,45 @@ export const es = {
       featured: true,
     },
     {
+      slug: "suarez-voley",
+      images: ["/work/suarez-voley.png"],
+      title: "PWA de Control de Acceso y Gestión Deportiva Offline-First",
+      client: "Suárez Voley",
+      sector: "Deporte & Gestión de Clubes",
+      timeline: "Diseño de PWA, Check-in & Operación",
+      heroSummary:
+        "Aplicación web progresiva para control de acceso con código, registro de asistencias y gestión operativa con guardado local cuando no hay conexión.",
+      challenge:
+        "El club necesitaba registrar asistencias en cancha sin depender de la conectividad: el control de acceso debía funcionar aunque se cayera internet, y la gestión diaria (tablero, tareas y calendario) vivía dispersa en herramientas sueltas.",
+      solution: {
+        overview:
+          "Construimos una PWA instalable con kiosco de check-in por código, persistencia local con sincronización posterior y un panel operativo con dashboard, tablero kanban y calendario.",
+        keyDeliverables: [
+          "Kiosco de check-in con código de acceso y confirmación de asistencia en segundos.",
+          "Modo offline-first: los registros se guardan localmente en la PWA y se sincronizan al recuperar conexión.",
+          "Dashboard operativo con últimos ingresos del día.",
+          "Tablero kanban y calendario para la gestión del equipo.",
+        ],
+        architecture:
+          "PWA Instalable (Check-in Kiosco) ➔ Local-First Store & Sync ➔ Dashboard Operativo ➔ Kanban & Calendario.",
+      },
+      metrics: [
+        { value: "0 seg", label: "Espera de red para registrar asistencia" },
+        { value: "4 dígitos", label: "Código de acceso para check-in" },
+        { value: "3 vistas", label: "Dashboard, kanban y calendario operativos" },
+      ],
+      stack: [
+        "Progressive Web App",
+        "Offline-First",
+        "Local Storage & Sync",
+        "Kanban Board",
+        "Check-in Kiosco",
+      ],
+      featured: true,
+    },
+    {
       slug: "nezt-telemetry-engine",
+      images: ["/work/nezt-telemetry-engine.svg"],
       title: "Motor de Orquestación y Telemetría Distribuida para Pipelines de IA",
       client: "NEZT Labs (Internal Platform)",
       sector: "Sistemas Distribuidos & Automatización",

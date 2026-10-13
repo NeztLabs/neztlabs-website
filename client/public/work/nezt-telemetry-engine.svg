@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" fill="none">
+  <rect width="900" height="1200" fill="#0B0B0D"/>
+  <rect x="36" y="36" width="828" height="1128" stroke="#C99A2E" stroke-opacity="0.55"/>
+  <rect x="48" y="48" width="804" height="1104" stroke="#F2F0EA" stroke-opacity="0.08"/>
+  <g stroke="#F2F0EA" stroke-opacity="0.08">
+    <path d="M120 200H780M120 280H780M120 360H780M200 140V460M400 140V460M600 140V460"/>
+  </g>
+  <g stroke="#C99A2E" stroke-opacity="0.75">
+    <path d="M200 320L400 220L600 300L760 180"/>
+    <path d="M160 380L400 260L560 400" stroke-opacity="0.4"/>
+  </g>
+  <g fill="#C99A2E">
+    <circle cx="200" cy="320" r="6"/>
+    <circle cx="400" cy="220" r="5"/>
+    <circle cx="600" cy="300" r="7"/>
+    <circle cx="760" cy="180" r="4"/>
+    <circle cx="400" cy="260" r="3" fill="#E0B342"/>
+  </g>
+  <path d="M96 500H804" stroke="#C99A2E" stroke-opacity="0.35"/>
+  <text x="96" y="168" fill="#C99A2E" font-family="Segoe UI, sans-serif" font-size="18" letter-spacing="6">03  /  RUNTIME</text>
+  <text x="96" y="640" fill="#F2F0EA" font-family="Segoe UI, sans-serif" font-size="72" font-weight="600" letter-spacing="-1.5">TELEMETRY</text>
+  <text x="96" y="698" fill="#9A978F" font-family="Segoe UI, sans-serif" font-size="28">NEZT Labs</text>
+  <g font-family="Consolas, monospace" font-size="16" fill="#9A978F">
+    <text x="96" y="790">P95  ·  1.2ms</text>
+    <text x="96" y="822">MESH  ·  LIVE</text>
+    <text x="96" y="854">EVENTS  ·  0 LOST</text>
+  </g>
+  <path d="M96 960H180L210 900L250 1020L290 930L330 980H804" stroke="#E0B342" stroke-width="2"/>
+  <text x="96" y="1048" fill="#6F6D67" font-family="Consolas, monospace" font-size="15" letter-spacing="2">GO  ·  WEBSOCKETS  ·  REDIS</text>
+</svg>

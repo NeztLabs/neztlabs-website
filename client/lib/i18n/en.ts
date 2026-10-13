@@ -373,6 +373,7 @@ export const en: Dictionary = {
   projects: [
     {
       slug: "museo-interactivo-venezuela",
+      images: ["/work/museo-hero.png", "/work/museo-dashboard.png"],
       title: "Interactive Web Platform & Custom CMS with Go and MongoDB",
       client: "Heritage & Cultural Museum",
       sector: "Cultural Heritage & Public Sector (Venezuela)",
@@ -412,6 +413,7 @@ export const en: Dictionary = {
     },
     {
       slug: "power-up-ecommerce",
+      images: ["/work/power-up.png"],
       title: "High-Performance E-Commerce with Loyalty and Real-Time Analytics",
       client: "Power Up",
       sector: "Health, Nutrition & Functional Food",
@@ -449,7 +451,45 @@ export const en: Dictionary = {
       featured: true,
     },
     {
+      slug: "suarez-voley",
+      images: ["/work/suarez-voley.png"],
+      title: "Offline-First Access Control & Sports Management PWA",
+      client: "Suárez Voley",
+      sector: "Sports & Club Management",
+      timeline: "PWA Design, Check-in & Operations",
+      heroSummary:
+        "Progressive web app for code-based access control, attendance tracking, and operational management with local persistence when offline.",
+      challenge:
+        "The club needed to log attendance courtside without depending on connectivity: access control had to work even if the internet dropped, and daily management (board, tasks, calendar) was scattered across disconnected tools.",
+      solution: {
+        overview:
+          "We built an installable PWA with a code-based check-in kiosk, local persistence with later sync, and an operations panel with dashboard, kanban board, and calendar.",
+        keyDeliverables: [
+          "Check-in kiosk with access code and attendance confirmation in seconds.",
+          "Offline-first mode: records persist locally in the PWA and sync when connection returns.",
+          "Operations dashboard with the day's latest check-ins.",
+          "Kanban board and calendar for team management.",
+        ],
+        architecture:
+          "Installable PWA (Check-in Kiosk) ➔ Local-First Store & Sync ➔ Operations Dashboard ➔ Kanban & Calendar.",
+      },
+      metrics: [
+        { value: "0 sec", label: "Network wait to log attendance" },
+        { value: "4 digits", label: "Access code for check-in" },
+        { value: "3 views", label: "Live dashboard, kanban, and calendar" },
+      ],
+      stack: [
+        "Progressive Web App",
+        "Offline-First",
+        "Local Storage & Sync",
+        "Kanban Board",
+        "Check-in Kiosk",
+      ],
+      featured: true,
+    },
+    {
       slug: "nezt-telemetry-engine",
+      images: ["/work/nezt-telemetry-engine.svg"],
       title: "Orchestration & Distributed Telemetry Engine for AI Pipelines",
       client: "NEZT Labs (Internal Platform)",
       sector: "Distributed Systems & Automation",
