@@ -1,8 +1,6 @@
 // Datos fijos de muestra para la vCard oculta /vcard (ES, sin tracking).
 // shortcut: teléfono/WhatsApp y persona son de muestra; reemplazar por reales antes de difundir.
 
-export type VCardVariant = "solid" | "holo" | "minimal";
-
 export const vcard = {
   fullName: "Santiago Vega",
   title: "Founder · Automatización e IA aplicada",

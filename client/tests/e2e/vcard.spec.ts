@@ -30,13 +30,12 @@ test.describe("vCard oculta /vcard", () => {
     expect(body).toContain("END:VCARD");
   });
 
-  test("variantes conmutan y 360px sin scroll horizontal", async ({ page }) => {
+  test("variante holográfica única y 360px sin scroll horizontal", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
     await page.goto("/vcard");
-    await page.getByRole("button", { name: "Holográfica" }).click();
-    await expect(page.getByRole("button", { name: "Holográfica" })).toHaveAttribute("aria-pressed", "true");
-    await page.getByRole("button", { name: "Minimal" }).click();
-    await expect(page.getByRole("button", { name: "Minimal" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("button", { name: "Sólida" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Minimal" })).toHaveCount(0);
+    await expect(page.getByRole("article")).toBeVisible();
     const noXScroll = await page.evaluate(() => document.documentElement.scrollWidth <= 360);
     expect(noXScroll).toBeTruthy();
   });

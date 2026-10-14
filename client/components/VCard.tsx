@@ -1,15 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Monogram } from "./Logo";
-import { telHref, vcard, waHref, type VCardVariant } from "@/lib/vcard";
-
-const VARIANT_KEY = "nezt-vcard-variant";
-const VARIANTS: { id: VCardVariant; label: string }[] = [
-  { id: "solid", label: "Sólida" },
-  { id: "holo", label: "Holográfica" },
-  { id: "minimal", label: "Minimal" },
-];
+import { telHref, vcard, waHref } from "@/lib/vcard";
 
 function WppIcon({ size = 18 }: { size?: number }) {
   return (
@@ -67,47 +60,24 @@ function GlobeIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function VCard() {
-  const [variant, setVariant] = useState<VCardVariant>("solid");
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [qrOk, setQrOk] = useState(true);
   const cardRef = useRef<HTMLElement>(null);
   const sheenRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(VARIANT_KEY);
-      if (raw === "solid" || raw === "holo" || raw === "minimal") setVariant(raw);
-    } catch {
-      /* sin storage: queda sólida */
-    }
+  // Tilt holográfico, desactivado con reduced-motion.
+  const onTilt = useCallback((e: React.PointerEvent) => {
+    const el = cardRef.current;
+    const sheen = sheenRef.current;
+    if (!el || !sheen) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `perspective(900px) rotateY(${px * 10}deg) rotateX(${py * -10}deg)`;
+    sheen.style.background = `radial-gradient(420px circle at ${(px + 0.5) * 100}% ${(py + 0.5) * 100}%, rgba(240,208,137,.28), transparent 60%)`;
   }, []);
-
-  function pick(v: VCardVariant) {
-    setVariant(v);
-    try {
-      localStorage.setItem(VARIANT_KEY, v);
-    } catch {
-      /* ignorar */
-    }
-  }
-
-  // Tilt solo en holográfica y sin reduced-motion.
-  const onTilt = useCallback(
-    (e: React.PointerEvent) => {
-      if (variant !== "holo") return;
-      const el = cardRef.current;
-      const sheen = sheenRef.current;
-      if (!el || !sheen) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      el.style.transform = `perspective(900px) rotateY(${px * 10}deg) rotateX(${py * -10}deg)`;
-      sheen.style.background = `radial-gradient(420px circle at ${(px + 0.5) * 100}% ${(py + 0.5) * 100}%, rgba(240,208,137,.28), transparent 60%)`;
-    },
-    [variant],
-  );
 
   function resetTilt() {
     const el = cardRef.current;
@@ -163,11 +133,7 @@ export default function VCard() {
   }
 
   const cardSkin =
-    variant === "holo"
-      ? "bg-surface border-accent/60 shadow-[0_24px_80px_-24px_rgba(201,154,46,.45)]"
-      : variant === "minimal"
-        ? "bg-bg-elev border-border"
-        : "bg-surface border-border";
+    "bg-surface border-accent/60 shadow-[0_24px_80px_-24px_rgba(201,154,46,.45)]";
 
   const actionBtn =
     "flex min-h-[44px] w-full items-center gap-3 rounded-sm border border-border bg-bg-elev px-4 py-3 text-left text-sm text-fg transition-colors duration-200 hover:border-accent hover:text-accent-bright disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:border-border disabled:hover:text-fg";
@@ -183,23 +149,6 @@ export default function VCard() {
       }}
     >
       <div className="w-full max-w-sm">
-        {/* Switch de variantes */}
-        <div className="mb-4 flex rounded-sm border border-border bg-surface p-1" role="group" aria-label="Elegir estilo de tarjeta">
-          {VARIANTS.map((v) => (
-            <button
-              key={v.id}
-              type="button"
-              onClick={() => pick(v.id)}
-              aria-pressed={variant === v.id}
-              className={`min-h-[44px] flex-1 rounded-[3px] px-2 text-xs font-medium tracking-wide transition-colors duration-200 ${
-                variant === v.id ? "bg-accent text-accent-contrast" : "text-muted hover:text-fg"
-              }`}
-            >
-              {v.label}
-            </button>
-          ))}
-        </div>
-
         <article
           ref={cardRef}
           onPointerMove={onTilt}
@@ -207,12 +156,8 @@ export default function VCard() {
           aria-label={`Tarjeta de presentación de ${vcard.fullName}`}
           className={`relative overflow-hidden rounded-md border transition-shadow duration-300 ${cardSkin}`}
         >
-          {variant === "holo" && (
-            <>
-              <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-deep via-accent via-50% to-gold-hi" />
-              <div ref={sheenRef} aria-hidden="true" className="pointer-events-none absolute inset-0" />
-            </>
-          )}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-deep via-accent via-50% to-gold-hi" />
+          <div ref={sheenRef} aria-hidden="true" className="pointer-events-none absolute inset-0" />
 
           <div className="p-6 sm:p-7">
             <div className="flex items-center gap-4">
@@ -222,7 +167,7 @@ export default function VCard() {
               <div className="min-w-0">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-accent">{vcard.org}</p>
                 <h1 id="vcard-nombre" className="mt-1 font-display text-2xl font-bold leading-tight text-fg">
-                  {variant === "minimal" ? vcard.fullName : <span className="text-gold-gradient">{vcard.fullName}</span>}
+                  <span className="text-gold-gradient">{vcard.fullName}</span>
                 </h1>
                 <p className="mt-1 text-sm text-muted">{vcard.title}</p>
               </div>
