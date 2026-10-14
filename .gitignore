@@ -13,3 +13,4 @@ package-lock.json
 .vercel
 .env*
 client/client/
+AGENTS.md

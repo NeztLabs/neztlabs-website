@@ -1,9 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import BootstrapClient from "@/components/BootstrapClient";
-import { I18nProvider } from "@/components/I18nProvider";
 // Bootstrap solo grid: evita utilities/reboot porque pisan los tokens
 // dark/light de Tailwind (.text-muted, .border-*, etc. no usan cascade layers
 // y ganan a Tailwind aunque se importen antes).
@@ -77,12 +73,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className={`${jakarta.variable} ${inter.variable} ${mono.variable} antialiased`}>
-        <BootstrapClient />
-        <I18nProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </I18nProvider>
+        {children}
       </body>
     </html>
   );
