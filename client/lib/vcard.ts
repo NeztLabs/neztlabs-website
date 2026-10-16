@@ -1,5 +1,5 @@
-// Datos de muestra para las vCards ocultas /vcard y /vcard/[slug] (ES, sin tracking).
-// shortcut: los 3 perfiles (naza, nico, moises) son de muestra estándar;
+// Datos para las vCards ocultas /vcard y /vcard/[slug] (ES, sin tracking).
+// shortcut: nico y moises siguen con datos de muestra estándar;
 // reemplazar por datos reales antes de difundir.
 
 export type VCardData = {
@@ -57,7 +57,21 @@ export const VCARDS: Record<"nezt" | VCardSlug, VCardData> = {
     vcardUrl: "https://nezt.io/vcard",
     locations: ["Trabajo remoto", "Montevideo, Uruguay"],
   },
-  naza: standard("Naza", "naza"),
+  naza: {
+    fullName: "Nazareno Mansilla",
+    title: "Desarrollador Full-Stack · Automatizador de procesos con IA",
+    org: "NEZT",
+    tagline: "BUILD. CONNECT. SCALE.",
+    descriptor: "Software, automatización e IA aplicada",
+    email: "mansillanaza@gmail.com",
+    phoneE164: "+543804494128",
+    phoneDisplay: "+54 380 449 4128",
+    whatsappE164: "543804494128",
+    whatsappText: "Hola Nazareno Mansilla de NEZT, vi tu tarjeta y quiero conversar.",
+    web: "https://nezt.io",
+    vcardUrl: "https://nezt.io/vcard/naza",
+    locations: ["Trabajo remoto", "La Rioja Capital, La Rioja, Argentina"],
+  },
   nico: standard("Nico", "nico"),
   moises: standard("Moises", "moises"),
 };

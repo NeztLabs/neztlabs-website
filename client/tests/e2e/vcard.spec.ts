@@ -47,7 +47,7 @@ test.describe("vCard oculta /vcard", () => {
   });
 
   test("cada slug muestra su tarjeta sin chrome", async ({ page }) => {
-    for (const [slug, name] of [["naza", "Naza"], ["nico", "Nico"], ["moises", "Moises"]]) {
+    for (const [slug, name] of [["naza", "Nazareno Mansilla"], ["nico", "Nico"], ["moises", "Moises"]]) {
       await page.goto(`/vcard/${slug}`);
       await expect(page.getByRole("heading", { name })).toBeVisible();
       await expect(page.locator("header nav")).toHaveCount(0);
@@ -61,7 +61,7 @@ test.describe("vCard oculta /vcard", () => {
   });
 
   test("vcf por slug trae el FN de la persona", async ({ request }) => {
-    for (const [slug, name] of [["naza", "Naza"], ["nico", "Nico"], ["moises", "Moises"]]) {
+    for (const [slug, name] of [["naza", "Nazareno Mansilla"], ["nico", "Nico"], ["moises", "Moises"]]) {
       const res = await request.get(`/vcard/${slug}/contact.vcf`);
       expect(res.ok()).toBeTruthy();
       expect(res.headers()["content-type"]).toContain("text/vcard");
