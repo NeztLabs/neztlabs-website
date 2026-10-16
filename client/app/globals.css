@@ -192,6 +192,14 @@
     color: transparent;
   }
 
+  /* html-to-image no reproduce background-clip:text: en exportación el nombre va sólido. */
+  .exporting-png .text-gold-gradient {
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: #c99a2e;
+  }
+
   .surface-card {
     position: relative;
     background-color: var(--surface);

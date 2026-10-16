@@ -99,6 +99,7 @@ export default function VCard({ slug, qrDataUrl }: { slug?: string; qrDataUrl?: 
     setNotice(null);
     const prevTransform = el.style.transform;
     el.style.transform = "";
+    el.classList.add("exporting-png");
     try {
       const dataUrl = await toPng(el, {
         pixelRatio: 2,
@@ -115,6 +116,7 @@ export default function VCard({ slug, qrDataUrl }: { slug?: string; qrDataUrl?: 
     } catch {
       setNotice("No se pudo generar la imagen. Intentá de nuevo.");
     } finally {
+      el.classList.remove("exporting-png");
       el.style.transform = prevTransform;
       setSaving(false);
     }
@@ -197,7 +199,7 @@ export default function VCard({ slug, qrDataUrl }: { slug?: string; qrDataUrl?: 
             )}
 
             <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-faint">{vcard.tagline}</p>
-            <div className="hairline my-5" aria-hidden="true" />
+            <div className="hairline my-3" aria-hidden="true" />
 
             <ul className="space-y-2.5" aria-label="Acciones de contacto">
               <li>
