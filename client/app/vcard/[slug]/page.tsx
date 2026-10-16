@@ -14,9 +14,13 @@ export default async function VCardSlugPage({
 }) {
   const { slug } = await params;
   if (!isPersonSlug(slug)) notFound();
-  const qrDataUrl = await QRCode.toDataURL(getVCard(slug).vcardUrl, {
-    width: 168,
-    margin: 1,
-  });
-  return <VCard slug={slug} qrDataUrl={qrDataUrl} />;
+  // Naza usa su QR impreso de assets; el resto genera el suyo en build.
+  const qrSrc =
+    slug === "naza"
+      ? "/vcard/qr-naza.png"
+      : await QRCode.toDataURL(getVCard(slug).vcardUrl, {
+          width: 168,
+          margin: 1,
+        });
+  return <VCard slug={slug} qrSrc={qrSrc} />;
 }

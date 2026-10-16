@@ -60,7 +60,7 @@ function GlobeIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export default function VCard({ slug, qrDataUrl }: { slug?: string; qrDataUrl?: string }) {
+export default function VCard({ slug, qrSrc }: { slug?: string; qrSrc?: string }) {
   const vcard = getVCard(slug);
   const fileSlug = slug ?? "nezt";
   const [notice, setNotice] = useState<string | null>(null);
@@ -271,9 +271,9 @@ export default function VCard({ slug, qrDataUrl }: { slug?: string; qrDataUrl?: 
             <div className="hairline my-5" aria-hidden="true" />
 
             <div className="flex items-center gap-4">
-              {qrDataUrl ? (
+              {qrSrc ? (
                 <img
-                  src={qrDataUrl}
+                  src={qrSrc}
                   alt={`Código QR con el link a la tarjeta ${vcard.vcardUrl}`}
                   width={84}
                   height={84}
