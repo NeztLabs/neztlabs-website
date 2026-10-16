@@ -45,4 +45,29 @@ test.describe("vCard oculta /vcard", () => {
     await expect(page.locator("header")).toBeVisible();
     await expect(page.locator("footer, [role='contentinfo']").first()).toBeVisible();
   });
+
+  test("cada slug muestra su tarjeta sin chrome", async ({ page }) => {
+    for (const [slug, name] of [["naza", "Naza"], ["nico", "Nico"], ["moises", "Moises"]]) {
+      await page.goto(`/vcard/${slug}`);
+      await expect(page.getByRole("heading", { name })).toBeVisible();
+      await expect(page.locator("header nav")).toHaveCount(0);
+      await expect(page.locator("footer, [role='contentinfo']")).toHaveCount(0);
+    }
+  });
+
+  test("slug inválido devuelve 404", async ({ page }) => {
+    const res = await page.goto("/vcard/xyz");
+    expect(res?.status()).toBe(404);
+  });
+
+  test("vcf por slug trae el FN de la persona", async ({ request }) => {
+    for (const [slug, name] of [["naza", "Naza"], ["nico", "Nico"], ["moises", "Moises"]]) {
+      const res = await request.get(`/vcard/${slug}/contact.vcf`);
+      expect(res.ok()).toBeTruthy();
+      expect(res.headers()["content-type"]).toContain("text/vcard");
+      const body = await res.text();
+      expect(body).toContain(`FN:${name}`);
+      expect(body).toContain("END:VCARD");
+    }
+  });
 });

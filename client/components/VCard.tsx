@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { Monogram } from "./Logo";
-import { telHref, vcard, waHref } from "@/lib/vcard";
+import { getVCard, telHref, waHref } from "@/lib/vcard";
 
 function WppIcon({ size = 18 }: { size?: number }) {
   return (
@@ -59,7 +59,9 @@ function GlobeIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export default function VCard() {
+export default function VCard({ slug }: { slug?: string }) {
+  const vcard = getVCard(slug);
+  const vcfPath = slug ? `/vcard/${slug}/contact.vcf` : "/vcard/contact.vcf";
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [qrOk, setQrOk] = useState(true);
@@ -92,7 +94,7 @@ export default function VCard() {
     setSaving(true);
     setNotice(null);
     try {
-      const res = await fetch("/vcard/contact.vcf");
+      const res = await fetch(vcfPath);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
