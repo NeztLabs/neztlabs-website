@@ -16,6 +16,8 @@ export type VCardData = {
   web: string;
   vcardUrl: string;
   locations: string[];
+  /** Líneas de venta (beneficios). Solo se muestra si existe; hoy solo Naza. */
+  pitch?: string[];
 };
 
 export type VCardSlug = "naza" | "nico" | "moises";
@@ -71,6 +73,11 @@ export const VCARDS: Record<"nezt" | VCardSlug, VCardData> = {
     web: "https://nezt.io",
     vcardUrl: "https://nezt.io/vcard/naza",
     locations: ["Trabajo remoto", "La Rioja Capital, La Rioja, Argentina"],
+    pitch: [
+      "Páginas web que atraen clientes mientras dormís.",
+      "Sistemas a medida para tu negocio: orden, control y chau planillas.",
+      "Automatización con IA: menos horas manuales, menos errores.",
+    ],
   },
   nico: standard("Nico", "nico"),
   moises: standard("Moises", "moises"),

@@ -70,4 +70,14 @@ test.describe("vCard oculta /vcard", () => {
       expect(body).toContain("END:VCARD");
     }
   });
+
+  test("pitch de venta solo en Naza", async ({ page }) => {
+    await page.goto("/vcard/naza");
+    await expect(page.getByRole("heading", { name: "Nazareno Mansilla" })).toBeVisible();
+    const pitch = page.getByRole("region", { name: "Beneficios de trabajar conmigo" });
+    await expect(pitch).toBeVisible();
+    await expect(pitch).toContainText("mientras dormís");
+    await page.goto("/vcard/nico");
+    await expect(page.getByRole("region", { name: "Beneficios de trabajar conmigo" })).toHaveCount(0);
+  });
 });

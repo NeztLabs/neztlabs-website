@@ -175,6 +175,20 @@ export default function VCard({ slug }: { slug?: string }) {
               </div>
             </div>
 
+            {vcard.pitch && vcard.pitch.length > 0 && (
+              <section aria-label="Beneficios de trabajar conmigo" className="mt-4 rounded-sm border border-accent/30 bg-bg-elev p-4">
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-accent">¿Cómo te ayudo?</p>
+                <ul className="mt-2 space-y-1.5">
+                  {vcard.pitch.map((line) => (
+                    <li key={line} className="flex gap-2 text-sm leading-snug text-fg">
+                      <span aria-hidden="true" className="text-accent">◆</span>
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
             <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-faint">{vcard.tagline}</p>
             <div className="hairline my-5" aria-hidden="true" />
 
