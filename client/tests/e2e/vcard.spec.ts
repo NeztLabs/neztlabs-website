@@ -61,7 +61,7 @@ test.describe("vCard oculta /vcard", () => {
     await expect(page.getByRole("heading", { name: "Nazareno Mansilla" })).toBeVisible();
     const pitch = page.getByRole("region", { name: "Beneficios de trabajar conmigo" });
     await expect(pitch).toBeVisible();
-    await expect(pitch).toContainText("mientras dormís");
+    await expect(pitch).toContainText("captar consultas");
     await page.goto("/vcard/nico");
     await expect(page.getByRole("region", { name: "Beneficios de trabajar conmigo" })).toHaveCount(0);
   });

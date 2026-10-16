@@ -186,7 +186,7 @@ export default function VCard({ slug, qrSrc }: { slug?: string; qrSrc?: string }
 
             {vcard.pitch && vcard.pitch.length > 0 && (
               <section aria-label="Beneficios de trabajar conmigo" className="mt-4 rounded-sm border border-accent/30 bg-bg-elev p-4">
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-accent">¿Cómo te ayudo?</p>
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-accent">Qué hago por tu negocio</p>
                 <ul className="mt-2 space-y-1.5">
                   {vcard.pitch.map((line) => (
                     <li key={line} className="flex gap-2 text-sm leading-snug text-fg">
@@ -219,7 +219,7 @@ export default function VCard({ slug, qrSrc }: { slug?: string; qrSrc?: string }
                 {wa ? (
                   <a href={wa} target="_blank" rel="noopener noreferrer" className={actionBtn}>
                     <span className="text-accent"><WppIcon /></span>
-                    <span><span className="block font-medium">WhatsApp</span><span className="block text-xs text-muted">Respuesta rápida</span></span>
+                    <span><span className="block font-medium">WhatsApp</span><span className="block text-xs text-muted">Consulta por WhatsApp</span></span>
                   </a>
                 ) : (
                   <button type="button" disabled aria-disabled="true" className={actionBtn}>
