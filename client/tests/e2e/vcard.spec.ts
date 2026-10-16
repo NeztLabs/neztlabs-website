@@ -15,19 +15,15 @@ test.describe("vCard oculta /vcard", () => {
     await expect(page.getByRole("link", { name: /Llamar/ })).toHaveAttribute("href", "tel:+59899123456");
     await expect(page.getByRole("link", { name: /WhatsApp/ })).toHaveAttribute("href", /wa\.me\/59899123456/);
     await expect(page.getByRole("link", { name: /Email/ })).toHaveAttribute("href", "mailto:labsnezt@gmail.com");
-    await expect(page.getByRole("link", { name: /Web/ })).toHaveAttribute("href", "https://nezt.io");
+    await expect(page.getByRole("link", { name: /Web/ })).toHaveAttribute("href", "https://websitie-startup.vercel.app");
   });
 
-  test("endpoint .vcf descarga vCard válida", async ({ request }) => {
-    const res = await request.get("/vcard/contact.vcf");
-    expect(res.ok()).toBeTruthy();
-    expect(res.headers()["content-type"]).toContain("text/vcard");
-    expect(res.headers()["content-disposition"]).toContain("nezt.vcf");
-    const body = await res.text();
-    expect(body).toContain("BEGIN:VCARD");
-    expect(body).toContain("FN:Santiago Vega");
-    expect(body).toContain("ORG:NEZT");
-    expect(body).toContain("END:VCARD");
+  test("descargar genera un PNG de la tarjeta", async ({ page }) => {
+    await page.goto("/vcard/naza");
+    const downloadPromise = page.waitForEvent("download");
+    await page.getByRole("button", { name: "Descargar" }).click();
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toMatch(/\.png$/);
   });
 
   test("variante holográfica única y 360px sin scroll horizontal", async ({ page }) => {
@@ -58,17 +54,6 @@ test.describe("vCard oculta /vcard", () => {
   test("slug inválido devuelve 404", async ({ page }) => {
     const res = await page.goto("/vcard/xyz");
     expect(res?.status()).toBe(404);
-  });
-
-  test("vcf por slug trae el FN de la persona", async ({ request }) => {
-    for (const [slug, name] of [["naza", "Nazareno Mansilla"], ["nico", "Nico"], ["moises", "Moises"]]) {
-      const res = await request.get(`/vcard/${slug}/contact.vcf`);
-      expect(res.ok()).toBeTruthy();
-      expect(res.headers()["content-type"]).toContain("text/vcard");
-      const body = await res.text();
-      expect(body).toContain(`FN:${name}`);
-      expect(body).toContain("END:VCARD");
-    }
   });
 
   test("pitch de venta solo en Naza", async ({ page }) => {

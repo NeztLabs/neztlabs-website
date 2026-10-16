@@ -37,8 +37,8 @@ const standard = (
   phoneDisplay: "+598 99 123 456",
   whatsappE164: "59899123456",
   whatsappText: `Hola ${fullName} de NEZT, vi tu tarjeta y quiero conversar.`,
-  web: "https://nezt.io",
-  vcardUrl: `https://nezt.io/vcard/${slug}`,
+  web: "https://websitie-startup.vercel.app",
+  vcardUrl: `https://websitie-startup.vercel.app/vcard/${slug}`,
   locations: ["Trabajo remoto", "Montevideo, Uruguay"],
 });
 
@@ -55,8 +55,8 @@ export const VCARDS: Record<"nezt" | VCardSlug, VCardData> = {
     phoneDisplay: "+598 99 123 456",
     whatsappE164: "59899123456",
     whatsappText: "Hola NEZT, vi tu tarjeta y quiero conversar.",
-    web: "https://nezt.io",
-    vcardUrl: "https://nezt.io/vcard",
+    web: "https://websitie-startup.vercel.app",
+    vcardUrl: "https://websitie-startup.vercel.app/vcard",
     locations: ["Trabajo remoto", "Montevideo, Uruguay"],
   },
   naza: {
@@ -70,8 +70,8 @@ export const VCARDS: Record<"nezt" | VCardSlug, VCardData> = {
     phoneDisplay: "+54 380 449 4128",
     whatsappE164: "543804494128",
     whatsappText: "Hola Nazareno Mansilla de NEZT, vi tu tarjeta y quiero conversar.",
-    web: "https://nezt.io",
-    vcardUrl: "https://nezt.io/vcard/naza",
+    web: "https://websitie-startup.vercel.app",
+    vcardUrl: "https://websitie-startup.vercel.app/vcard/naza",
     locations: ["Trabajo remoto", "La Rioja Capital, La Rioja, Argentina"],
     pitch: [
       "Páginas web que atraen clientes mientras dormís.",
@@ -97,28 +97,3 @@ export const telHref = (e164: string | null) =>
 
 export const waHref = (num: string | null, text: string) =>
   num ? `https://wa.me/${num}?text=${encodeURIComponent(text)}` : null;
-
-function escVcf(value: string): string {
-  return value.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
-}
-
-export function buildVcf(data: VCardData = VCARDS.nezt): string {
-  const lines = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    `FN:${escVcf(data.fullName)}`,
-    `ORG:${escVcf(data.org)}`,
-    `TITLE:${escVcf(data.title)}`,
-  ];
-  if (data.phoneE164) {
-    lines.push(`TEL;TYPE=CELL,VOICE:${escVcf(data.phoneE164)}`);
-  }
-  lines.push(
-    `EMAIL;TYPE=WORK,INTERNET:${escVcf(data.email)}`,
-    `URL:${escVcf(data.web)}`,
-    `NOTE:${escVcf(`${data.tagline} — ${data.descriptor}`)}`,
-    `REV:${new Date().toISOString().slice(0, 10)}`,
-    "END:VCARD",
-  );
-  return lines.join("\r\n");
-}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { toPng } from "html-to-image";
 import { Monogram } from "./Logo";
 import { getVCard, telHref, waHref } from "@/lib/vcard";
 
@@ -59,12 +60,11 @@ function GlobeIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export default function VCard({ slug }: { slug?: string }) {
+export default function VCard({ slug, qrDataUrl }: { slug?: string; qrDataUrl?: string }) {
   const vcard = getVCard(slug);
-  const vcfPath = slug ? `/vcard/${slug}/contact.vcf` : "/vcard/contact.vcf";
+  const fileSlug = slug ?? "nezt";
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const [qrOk, setQrOk] = useState(true);
   const cardRef = useRef<HTMLElement>(null);
   const sheenRef = useRef<HTMLDivElement>(null);
 
@@ -88,27 +88,34 @@ export default function VCard({ slug }: { slug?: string }) {
 
   const tel = telHref(vcard.phoneE164);
   const wa = waHref(vcard.whatsappE164, vcard.whatsappText);
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=168x168&margin=8&data=${encodeURIComponent(vcard.vcardUrl)}`;
 
-  async function saveContact() {
+  // Descarga la tarjeta como PNG. Los botones (Descargar/Compartir) y el
+  // brillo del tilt se excluyen vía data-export-exclude: la imagen queda
+  // solo con la presentación.
+  async function downloadImage() {
+    const el = cardRef.current;
+    if (!el) return;
     setSaving(true);
     setNotice(null);
+    const prevTransform = el.style.transform;
+    el.style.transform = "";
     try {
-      const res = await fetch(vcfPath);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      const dataUrl = await toPng(el, {
+        pixelRatio: 2,
+        filter: (node) =>
+          !(node instanceof HTMLElement && node.dataset.exportExclude === "true"),
+      });
       const a = document.createElement("a");
-      a.href = url;
-      a.download = "nezt.vcf";
+      a.href = dataUrl;
+      a.download = `vcard-${fileSlug}.png`;
       document.body.appendChild(a);
       a.click();
       a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 4000);
-      setNotice("Contacto descargado. Abrilo para guardarlo en tu agenda.");
+      setNotice("Imagen descargada. Compartila donde quieras.");
     } catch {
-      setNotice("No se pudo descargar el contacto. Intentá de nuevo.");
+      setNotice("No se pudo generar la imagen. Intentá de nuevo.");
     } finally {
+      el.style.transform = prevTransform;
       setSaving(false);
     }
   }
@@ -159,7 +166,7 @@ export default function VCard({ slug }: { slug?: string }) {
           className={`relative overflow-hidden rounded-md border transition-shadow duration-300 ${cardSkin}`}
         >
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-deep via-accent via-50% to-gold-hi" />
-          <div ref={sheenRef} aria-hidden="true" className="pointer-events-none absolute inset-0" />
+          <div ref={sheenRef} aria-hidden="true" data-export-exclude="true" className="pointer-events-none absolute inset-0" />
 
           <div className="p-6 sm:p-7">
             <div className="flex items-center gap-4">
@@ -228,20 +235,20 @@ export default function VCard({ slug }: { slug?: string }) {
               <li>
                 <a href={vcard.web} target="_blank" rel="noopener noreferrer" className={actionBtn}>
                   <span className="text-accent"><GlobeIcon /></span>
-                  <span><span className="block font-medium">Web</span><span className="block text-xs text-muted">nezt.io</span></span>
+                  <span><span className="block font-medium">Web</span><span className="block text-xs text-muted">{vcard.web.replace(/^https?:\/\//, "")}</span></span>
                 </a>
               </li>
             </ul>
 
-            <div className="mt-2.5 grid grid-cols-2 gap-2.5">
+            <div className="mt-2.5 grid grid-cols-2 gap-2.5" data-export-exclude="true">
               <button
                 type="button"
-                onClick={saveContact}
+                onClick={downloadImage}
                 disabled={saving}
                 className="flex min-h-[44px] items-center justify-center gap-2 rounded-sm bg-accent px-3 py-3 text-sm font-semibold text-accent-contrast transition-colors duration-200 hover:bg-accent-bright disabled:opacity-60"
               >
                 <SaveIcon />
-                {saving ? "Guardando…" : "Guardar"}
+                {saving ? "Descargando…" : "Descargar"}
               </button>
               <button
                 type="button"
@@ -262,14 +269,12 @@ export default function VCard({ slug }: { slug?: string }) {
             <div className="hairline my-5" aria-hidden="true" />
 
             <div className="flex items-center gap-4">
-              {qrOk ? (
+              {qrDataUrl ? (
                 <img
-                  src={qrSrc}
+                  src={qrDataUrl}
                   alt={`Código QR con el link a la tarjeta ${vcard.vcardUrl}`}
                   width={84}
                   height={84}
-                  loading="lazy"
-                  onError={() => setQrOk(false)}
                   className="h-[84px] w-[84px] shrink-0 rounded-sm border border-border bg-white p-1"
                 />
               ) : (
@@ -284,7 +289,6 @@ export default function VCard({ slug }: { slug?: string }) {
           </div>
         </article>
 
-        <p className="mt-4 text-center text-xs text-faint">Tarjeta de muestra — datos ilustrativos.</p>
       </div>
     </main>
   );

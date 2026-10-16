@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
+import QRCode from "qrcode";
 import VCard from "@/components/VCard";
-import { VCARD_SLUGS, isPersonSlug } from "@/lib/vcard";
+import { VCARD_SLUGS, getVCard, isPersonSlug } from "@/lib/vcard";
 
 export function generateStaticParams(): { slug: string }[] {
   return VCARD_SLUGS.map((slug) => ({ slug }));
@@ -13,5 +14,9 @@ export default async function VCardSlugPage({
 }) {
   const { slug } = await params;
   if (!isPersonSlug(slug)) notFound();
-  return <VCard slug={slug} />;
+  const qrDataUrl = await QRCode.toDataURL(getVCard(slug).vcardUrl, {
+    width: 168,
+    margin: 1,
+  });
+  return <VCard slug={slug} qrDataUrl={qrDataUrl} />;
 }
