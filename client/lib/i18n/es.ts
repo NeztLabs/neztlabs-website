@@ -20,6 +20,8 @@ export interface Project {
   metrics: ProjectMetric[];
   stack: string[];
   featured: boolean;
+  /** Ausente = trabajo de cliente. */
+  kind?: "client" | "internal";
 }
 
 export const es = {
@@ -259,6 +261,7 @@ export const es = {
     architectureLabel: "Arquitectura & Entrega Técnica:",
     metricsLabel: "Métricas de Impacto",
     viewCase: "Ver Caso Completo",
+    kindInternal: "Plataforma interna",
   },
   contactSection: {
     eyebrow: "Iniciar un proyecto",
@@ -550,6 +553,7 @@ export const es = {
         "Redis",
       ],
       featured: true,
+      kind: "internal" as const,
     },
   ],
 };

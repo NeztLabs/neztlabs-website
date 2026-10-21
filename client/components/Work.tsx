@@ -2,7 +2,7 @@
 
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
-import WorkCarousel from "./WorkCarousel";
+import ProjectGrid from "./ProjectGrid";
 import { useI18n } from "./I18nProvider";
 
 export default function Work({
@@ -27,10 +27,8 @@ export default function Work({
           </Reveal>
         )}
 
-        <div
-          className={`relative h-[36rem] overflow-hidden rounded-md border border-border bg-bg-elev md:h-[44rem] ${showHeading ? "mt-12 md:mt-14" : ""}`}
-        >
-          <WorkCarousel limit={limit} />
+        <div className={showHeading ? "mt-12 md:mt-14" : ""}>
+          <ProjectGrid limit={limit} />
         </div>
       </div>
     </section>

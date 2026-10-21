@@ -237,6 +237,7 @@ export const en: Dictionary = {
     architectureLabel: "Architecture & Technical Delivery:",
     metricsLabel: "Impact Metrics",
     viewCase: "View Full Case Study",
+    kindInternal: "Internal platform",
   },
   contactSection: {
     eyebrow: "Start a project",
