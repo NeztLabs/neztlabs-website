@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-25",
+  "assets": [
+    {
+      "company": "Distribuidora España",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/profile.php?id=61567673560967&sk=about",
+      "original_file": "assets/espana_fb/perfil-facebook.jpg",
+      "png_file": "assets/espana_fb/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "7ad114bb79c7d78dd11616e26a9863c100d3a1d0e607d39a5e9733e8cd87783d",
+      "observed_palette": [
+        "#BD0C14",
+        "#FEC305"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Distribuidora Tatito",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/distribuidoratatitotuc/",
+      "original_file": "assets/tatito/perfil-facebook.jpg",
+      "png_file": "assets/tatito/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "3e7184d44d0f7615d507d6c573b8e1c5e8ad9469b0ca9a54d9dc399249ca33e4",
+      "observed_palette": [
+        "#8B2124",
+        "#FFFF01"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Distribuidora Mayorista Varsan",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/distribuidoravarsan.ok/",
+      "original_file": "assets/varsan/perfil-facebook.png",
+      "png_file": "assets/varsan/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "ecd78a9bbcc68bf78ab0e58d9a6fc2ffb91dc3abe0bcabf74c726f312e8f9f17",
+      "observed_palette": [
+        "#E31E24",
+        "#E2181E"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Distribuidora La Mendocina SRL",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/p/Distribuidora-La-Mendocina-SRL-100063590063362/",
+      "original_file": "assets/mendocina/perfil-facebook.jpg",
+      "png_file": "assets/mendocina/logo-referencia.png",
+      "dimensions": [
+        500,
+        500
+      ],
+      "sha256": "9908184cdaa4a04f846ea0fee1cbe4c8d213910d12bd86c60bf9841e369f9613",
+      "observed_palette": [
+        "#F60203",
+        "#EABEBB"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Sogo Mayorista",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/sogomayorista/",
+      "original_file": "assets/sogo/perfil-facebook.jpg",
+      "png_file": "assets/sogo/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "b52adfaac96f9675278f6e789b1b92b39ed8d21d8c6de9cebbfb5f640bd5ca05",
+      "observed_palette": [
+        "#D3194A",
+        "#D41749"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Distribuidora 3B",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/p/Distribuidora-3B-100064159118978/",
+      "original_file": "assets/3b/perfil-facebook.jpg",
+      "png_file": "assets/3b/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "5d9a844170522fe2bfa0252322bb82f349698106372718ffad06be99686c825e",
+      "observed_palette": [
+        "#D00000",
+        "#FEED01"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Proveeduría Mayorista",
+      "status": "candidato",
+      "source_page": "https://www.facebook.com/ProveduriaMayoristaFormosa/",
+      "original_file": "assets/candidatos/formosa/perfil-facebook.png",
+      "png_file": "assets/candidatos/formosa/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "8555ce0de62984b5281f6ed75edf0a90c277e6611a905aa2c44947c5d0096f10",
+      "observed_palette": [
+        "#915D00",
+        "#F19F00"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "Distribuidora San Esteban",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/SanEstebanSrl/",
+      "original_file": "assets/sanesteban/perfil-facebook.png",
+      "png_file": "assets/sanesteban/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "e7b2e70ee0d524784407afb7ecd7e2e30a8edf4dea42446de1a83fd0701ba35a",
+      "observed_palette": [
+        "#C21010",
+        "#FEFF00"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "OyL Variedades — O&L Variety en el CSV",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/oylvariedadesmayorista/",
+      "original_file": "assets/oyl/perfil-facebook.jpg",
+      "png_file": "assets/oyl/logo-referencia.png",
+      "dimensions": [
+        337,
+        337
+      ],
+      "sha256": "d3acec19bf48fcd0ef567d9caaff89ac0597fedb6f1b4d4e17ade380040c7d16",
+      "observed_palette": [
+        "#2D7DAE",
+        "#2E7EB0"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    },
+    {
+      "company": "IPRI Mayorista",
+      "status": "perfil asociado mediante evidencia pública",
+      "source_page": "https://www.facebook.com/mayorista.ipri/",
+      "original_file": "assets/ipri/perfil-facebook.jpg",
+      "png_file": "assets/ipri/logo-referencia.png",
+      "dimensions": [
+        720,
+        720
+      ],
+      "sha256": "510b1083b64c690b114ebc028bb7aaeaafcbbabf0d3caeaa2adfd48df70be0ac",
+      "observed_palette": [
+        "#DD0101",
+        "#B00505"
+      ],
+      "palette_status": "muestreo aproximado, no paleta oficial",
+      "retrieved_date": "2026-10-25"
+    }
+  ],
+  "additional_assets": [
+    {
+      "key": "espana_fb",
+      "file": "assets/espana_fb/logo-sitio.png",
+      "source": "https://distribuidoraespana.com.ar/",
+      "source_image": "https://distribuidoraespana.com.ar/wp-content/uploads/2026/08/Logo-_Variable-horizontal-Roja-1280x1280-1-300x34.png",
+      "size": [
+        300,
+        34
+      ],
+      "kind": "logo-sitio"
+    },
+    {
+      "key": "espana_fb",
+      "file": "assets/espana_fb/producto-ejemplo.png",
+      "source": "https://distribuidoraespana.com.ar/",
+      "source_image": "https://distribuidoraespana.com.ar/wp-content/uploads/2026/04/oryx5en1-300x300.png",
+      "size": [
+        300,
+        300
+      ],
+      "kind": "producto-ejemplo"
+    }
+  ]
+}

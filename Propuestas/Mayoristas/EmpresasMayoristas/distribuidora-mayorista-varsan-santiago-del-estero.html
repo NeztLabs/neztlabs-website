@@ -1,0 +1,790 @@
+﻿<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distribuidora Mayorista Varsan · Demo de maqueta</title>
+<meta name="description" content="Maqueta de catálogo de bebidas para Distribuidora Mayorista Varsan, Santiago del Estero. Datos pendientes y precios simulados.">
+<style>
+:root{
+  --night:#0C1E23; --deep:#123841; --deep-2:#0F2C34;
+  --cream:#F8F3E7; --cream-2:#F0E8D6; --card:#FFFFFF;
+  --red:#D32027; --red-dark:#A3151B; --amber:#E8A33D; --mint:#9FD8CE;
+  --ink:#15282C; --ink-2:#4B5D61; --ink-3:#6C7C7F;
+  --line:#DFD6C3; --line-2:#C9BEA6;
+  --focus:#0B57D0;
+  --display:"Arial Narrow","Segoe UI",system-ui,Arial,sans-serif;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.56}
+img{display:block;max-width:100%;height:auto}
+a{color:var(--red-dark);text-underline-offset:3px}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.005em;line-height:.95}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+h1[tabindex="-1"]:focus{outline:none}
+.skip{position:absolute;left:12px;top:-70px;z-index:99;background:var(--amber);color:var(--ink);padding:12px 18px;font-weight:800}
+.skip:focus{top:12px}
+.wrap{max-width:1220px;margin:0 auto;padding:0 20px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.muted{color:var(--ink-2)}
+.note{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+.ph{font-family:var(--mono);font-size:.88em;background:#FFF1B8;border-bottom:1px dashed #A97900;padding:0 2px;white-space:nowrap}
+.sim{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border:1px solid currentColor;padding:1px 5px;vertical-align:3px;margin-left:5px}
+
+/* Aviso */
+.notice{background:var(--amber);color:var(--ink);font-size:11.5px;font-weight:600}
+.notice .wrap{display:flex;justify-content:center;gap:8px 18px;flex-wrap:wrap;padding:7px 20px;text-align:center}
+
+/* Cabecera */
+.site-head{background:var(--night);color:var(--cream);position:sticky;top:0;z-index:30}
+.head{display:flex;align-items:center;gap:16px 22px;min-height:84px;flex-wrap:wrap;padding:9px 0}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--cream);flex:none}
+.brand img{width:104px;height:54px;object-fit:contain;background:#fff;padding:3px 5px;border-radius:2px}
+.brand-name{display:flex;flex-direction:column;line-height:1.05}
+.brand-name strong{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.brand-name small{font-size:9px;letter-spacing:.19em;text-transform:uppercase;color:var(--mint);margin-top:3px}
+.nav{display:flex;gap:18px;margin-left:6px}
+.nav a{color:#C9D6D8;text-decoration:none;font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;padding:10px 0;border-bottom:2px solid transparent}
+.nav a:hover{color:#fff}
+.nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--amber)}
+.search{display:flex;flex:1 1 210px;max-width:310px;margin-left:auto;min-width:180px}
+.search input{flex:1;min-width:0;height:42px;border:1px solid #2E4B52;border-right:0;background:#14343C;color:#fff;padding:0 13px;font-size:13.5px}
+.search input::placeholder{color:#9DB0B4}
+.search button{width:45px;height:42px;border:1px solid #2E4B52;border-left:0;background:var(--amber);color:var(--ink);font-size:16px;cursor:pointer}
+.search button:hover{background:#F0B75A}
+.quote-link{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;background:var(--red);color:#fff;text-decoration:none;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.quote-link:hover{background:var(--red-dark)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:21px;height:21px;background:var(--amber);color:var(--ink);font-size:11px;font-weight:800;padding:0 5px}
+
+/* Páginas */
+.page{padding:0 0 68px}
+.page[hidden]{display:none}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.kicker::before{content:"";width:20px;height:1px;background:currentColor}
+.lead{font-size:17px;color:var(--ink-2);max-width:64ch}
+.section{margin-top:54px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line-2);padding-bottom:10px;margin-bottom:20px}
+.section-head h2{font-size:clamp(24px,3.2vw,34px)}
+.section-head a{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;background:var(--red);color:#fff;border:1px solid var(--red);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn.line{background:transparent;color:var(--cream);border-color:#4E6A70}
+.btn.line:hover{background:#1B3F47;border-color:#6F8A90}
+.btn.cream{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn.cream:hover{background:#fff}
+.btn.amber{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.btn.amber:hover{background:#F0B75A;border-color:#F0B75A}
+.btn.sm{min-height:38px;padding:0 13px;font-size:11px}
+.btn.block{width:100%}
+.btn[disabled]{background:#E4DCC9;border-color:#E4DCC9;color:#7C7A70;cursor:not-allowed}
+
+/* Hero */
+.hero-band{background:var(--night);color:var(--cream);padding:38px 0 42px;position:relative;overflow:hidden}
+.hero-band::after{content:"";position:absolute;inset:0;background:radial-gradient(700px 280px at 80% 10%,rgba(159,216,206,.12),transparent 65%);pointer-events:none}
+.hero{display:grid;grid-template-columns:1.06fr .94fr;gap:40px;align-items:center;position:relative;z-index:1}
+.hero h1{font-size:clamp(46px,6.8vw,84px);margin:6px 0 14px}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero .lead{color:#CBD7D8;font-size:16.5px}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 10px}
+.hero .note{color:#9DB0B4}
+.hero-fig{margin:0;position:relative;border:1px solid #33535B}
+.hero-fig img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.hero-fig .cap{position:absolute;left:0;bottom:0;right:0;background:linear-gradient(0deg,rgba(12,30,35,.92),transparent);padding:28px 12px 8px;font-size:9.5px;color:#CBD7D8;text-align:right}
+.hero-fig .cap a{color:#fff}
+.hero-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.hero-chips span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid #3A5B63;color:#C9D6D8;padding:4px 8px}
+
+/* Datos */
+.data-strip{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:#fff;margin-top:-1px}
+.data-cell{padding:14px 16px;border-right:1px solid var(--line)}
+.data-cell:last-child{border-right:0}
+.data-cell b{display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:3px}
+.data-cell strong{display:block;font-size:14px;line-height:1.25}
+.data-cell span{font-size:11.5px;color:var(--ink-2)}
+
+/* Categorías */
+.type-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.type-card{background:#fff;border:1px solid var(--line);padding:0;cursor:pointer;text-align:left;display:flex;flex-direction:column}
+.type-card:hover{border-color:var(--deep)}
+.type-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-bottom:2px solid var(--deep)}
+.type-card .body{padding:9px 11px 11px}
+.type-card h3{font-size:18px;margin-bottom:1px}
+.type-card span{font-size:10.5px;color:var(--ink-2)}
+
+/* Productos */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.prod{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
+.prod:hover{border-color:var(--line-2);box-shadow:0 6px 16px rgba(12,30,35,.08)}
+.prod .media{position:relative;background:#FBF8F0}
+.prod .media img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.prod .type{position:absolute;left:0;top:0;background:var(--night);color:var(--cream);font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 7px}
+.prod .off{position:absolute;right:0;top:0;background:var(--amber);color:var(--ink);font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 7px}
+.prod .body{padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px;flex:1}
+.prod h3{font-family:var(--sans);font-size:14.5px;font-weight:700;text-transform:none;letter-spacing:0;line-height:1.3}
+.prod h3 a{color:var(--ink);text-decoration:none}
+.prod h3 a:hover{text-decoration:underline}
+.prod .pres{font-size:11.5px;color:var(--ink-3)}
+.prod .price{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--red-dark)}
+.prod .avail{font-size:11px;color:#2C6B45}
+.prod .avail.out{color:var(--red);font-weight:700}
+.prod .actions{margin-top:auto;padding-top:8px}
+.prod .actions .btn{width:100%}
+.anexo{background:var(--deep);color:var(--cream);padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;border-left:6px solid var(--amber)}
+.anexo h2{color:var(--cream);font-size:clamp(20px,2.8vw,28px);margin-bottom:4px}
+.anexo p{color:#BFCFD1;font-size:12.5px;margin:0;max-width:64ch}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{border-top:2px solid var(--deep);padding-top:12px}
+.step .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--red)}
+.step h3{font-size:19px;margin:5px 0 4px}
+.step p{font-size:12.5px;color:var(--ink-2);margin:0}
+.b2b{background:#fff;border:1px solid var(--line);border-left:6px solid var(--red);padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.b2b h2{font-size:clamp(21px,3vw,30px);margin-bottom:5px}
+.b2b p{font-size:13px;color:var(--ink-2);margin:0;max-width:62ch}
+
+/* Catálogo */
+.page-head{padding:32px 0 16px;border-bottom:1px solid var(--line-2)}
+.page-head h1{font-size:clamp(36px,5vw,56px);margin:6px 0}
+.sim-states{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;margin:16px 0 20px}
+.sim-states span{color:var(--ink-3);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sim-states button{background:#fff;border:1px solid var(--line-2);padding:4px 10px;font-size:11px;cursor:pointer;min-height:30px}
+.sim-states button[aria-pressed="true"]{background:var(--night);color:#fff;border-color:var(--night)}
+.catalog{display:grid;grid-template-columns:228px 1fr;gap:26px;align-items:start}
+.filters{background:#fff;border:1px solid var(--line);padding:15px;position:sticky;top:110px}
+.filters h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);background:var(--deep);padding:6px 8px;margin:-15px -15px 12px}
+.filters fieldset{border:0;padding:0;margin:0 0 13px}
+.filters legend{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.filters label{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0;cursor:pointer}
+.filters input[type=checkbox]{width:16px;height:16px;accent-color:var(--deep)}
+.filters select{width:100%;height:34px;border:1px solid var(--line-2);background:#fff;padding:0 6px;font-size:12.5px}
+.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.count{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:#EAF1F0;border:1px solid #BFD4D1;padding:2px 3px 2px 8px}
+.chip button{width:20px;height:20px;border:1px solid #BFD4D1;background:#fff;cursor:pointer;line-height:1;font-size:11px}
+.empty,.errorbox{grid-column:1/-1;background:#fff;border:2px dashed var(--line-2);padding:42px 22px;text-align:center}
+.empty h2,.errorbox h2{font-size:28px;margin-bottom:7px}
+.empty p,.errorbox p{font-size:13.5px;color:var(--ink-2);max-width:48ch;margin:0 auto 14px}
+.errorbox{border-color:var(--red);background:#FFF5F5}
+.skeleton{background:#fff;border:1px solid var(--line)}
+.skeleton .sk-img{aspect-ratio:1/1;background:linear-gradient(100deg,#EDE7D9 30%,#FAF6EC 50%,#EDE7D9 70%);background-size:200% 100%;animation:sk 1.2s linear infinite}
+.skeleton .sk-line{height:10px;margin:12px;background:#EDE7D9}
+.skeleton .sk-line.short{width:55%;margin-bottom:14px}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.skeleton .sk-img{animation:none}}
+
+/* Detalle */
+.crumbs{font-size:12px;color:var(--ink-3);margin:22px 0 16px}
+.crumbs a{color:var(--ink-3)}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.detail-fig{margin:0;position:sticky;top:110px;border:1px solid var(--line);background:#fff}
+.detail-fig img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.detail-fig figcaption{font-size:10px;color:var(--ink-3);padding:6px 8px;border-top:1px solid var(--line)}
+.detail h1{font-size:clamp(32px,4.4vw,50px);margin:8px 0 5px}
+.sku{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.price-box{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);padding:13px 0;margin:17px 0}
+.price-box .big{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:var(--red-dark)}
+.stock-line{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#2C6B45;margin:0 0 13px}
+.stock-line.out{color:var(--red)}
+.qty-label{display:block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.qty{display:flex}
+.qty button{width:42px;height:44px;border:1px solid var(--line-2);background:#fff;cursor:pointer;font-size:19px;line-height:1}
+.qty button:first-child{border-right:0}
+.qty button:last-child{border-left:0}
+.qty input{width:60px;height:44px;border:1px solid var(--line-2);border-left:0;border-right:0;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+.add-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.inline-note{font-size:12.5px;color:var(--red);min-height:18px;margin-top:6px;font-weight:600}
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:18px}
+.spec-table th,.spec-table td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.spec-table th{width:44%;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+.rules{margin:13px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink-2)}
+.rules li{margin-bottom:4px}
+
+/* Cotización */
+.quote-wrap{display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:start;margin-top:20px}
+.lines{background:#fff;border:1px solid var(--line)}
+.line{display:grid;grid-template-columns:76px 1fr auto;gap:12px;padding:12px;border-bottom:1px solid var(--line);align-items:center}
+.line:last-child{border-bottom:0}
+.line img{width:76px;height:66px;object-fit:cover}
+.line h3{font-family:var(--sans);font-size:14px;font-weight:700;text-transform:none;line-height:1.3}
+.line .meta{font-size:11px;color:var(--ink-3)}
+.line .qty{margin-top:6px}
+.line .qty button{width:29px;height:29px;font-size:14px}
+.line .qty input{width:43px;height:29px;font-size:12.5px}
+.line .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.line .sub{font-weight:800;font-variant-numeric:tabular-nums}
+.link-btn{background:none;border:0;padding:2px;font-size:11px;color:var(--red);text-decoration:underline;cursor:pointer;min-height:24px}
+.summary{background:#fff;border:1px solid var(--line);border-top:5px solid var(--deep);padding:16px;position:sticky;top:110px}
+.summary h2{font-size:24px;margin-bottom:9px}
+.sum-row{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:6px 0;color:var(--ink-2);border-bottom:1px dotted var(--line)}
+.sum-row strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.sum-total{display:flex;justify-content:space-between;gap:10px;padding-top:9px;font-weight:800;font-size:16px}
+.summary .btn{margin-top:11px}
+.field{margin-top:13px}
+.field label{display:block;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.field textarea,.field select{width:100%;border:1px solid var(--line-2);padding:8px;font-size:13px;background:#fff}
+.field textarea{min-height:72px;resize:vertical}
+.success{background:#EDF6EF;border:1px solid #B9D6C4;padding:10px 12px;margin-top:9px;font-size:12px;color:#204D34}
+.success strong{display:block;margin-bottom:2px}
+.quote-empty{background:#fff;border:2px dashed var(--line-2);padding:46px 22px;text-align:center;margin-top:20px}
+.quote-empty h2{font-size:28px;margin-bottom:7px}
+.quote-empty p{font-size:13.5px;color:var(--ink-2);max-width:48ch;margin:0 auto 14px}
+
+/* Contacto */
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+.contact-card{background:#fff;border:1px solid var(--line);padding:18px 19px}
+.contact-card h2{font-size:20px;color:var(--red-dark);margin-bottom:7px}
+.contact-card p{font-size:14px;margin:0 0 5px}
+.contact-card .links{display:flex;gap:13px;flex-wrap:wrap;margin-top:8px;font-size:12px;font-weight:700}
+.pending-box{background:#FFF1B8;border:1px dashed #C79A1F;padding:9px 11px;font-size:12.5px;margin-top:6px}
+.conditions{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.conditions th,.conditions td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.conditions th{width:32%;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.status-line{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+.status-line::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+
+/* Pie */
+footer{background:var(--night);color:#C9D6D8}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:26px;padding:32px 0 22px}
+footer h2{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FA5A9;margin-bottom:8px}
+footer p,footer li{font-size:12px;margin:0 0 4px}
+footer ul{list-style:none;padding:0;margin:0}
+footer a{color:#fff}
+.foot-brand{font-family:var(--display);font-size:26px;text-transform:uppercase;color:#fff;line-height:1;margin-bottom:6px}
+.foot-bottom{border-top:1px solid #28464D;padding:12px 0 22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:10.5px;color:#8FA5A9}
+.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,130%);background:var(--amber);color:var(--ink);padding:11px 16px;font-size:12.5px;font-weight:700;z-index:80;transition:transform .2s;max-width:calc(100vw - 28px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}html{scroll-behavior:auto}}
+
+/* Responsive */
+@media (max-width:1024px){
+  .hero{grid-template-columns:1fr;gap:24px}
+  .hero-fig img{aspect-ratio:16/9}
+  .type-grid{grid-template-columns:repeat(3,1fr)}
+  .detail{grid-template-columns:1fr;gap:22px}
+  .detail-fig{position:static;max-width:520px}
+  .catalog{grid-template-columns:1fr}
+  .filters{position:static}
+  .quote-wrap{grid-template-columns:1fr}
+  .summary{position:static}
+  .data-strip{grid-template-columns:1fr}
+  .data-cell{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media (max-width:820px){
+  .head{display:grid;grid-template-columns:1fr auto;gap:7px 10px;padding:9px 0;min-height:auto}
+  .brand{grid-column:1;grid-row:1}
+  .quote-link{grid-column:2;grid-row:1;justify-self:end}
+  .search{grid-column:1/-1;grid-row:2;max-width:none;width:100%;margin-left:0;min-width:0;flex:none}
+  .nav{grid-column:1/-1;grid-row:3;margin:0;gap:14px;overflow-x:auto;border-top:1px solid #28464D;padding-top:2px}
+  .nav a{padding:6px 0;font-size:10.5px;white-space:nowrap}
+  .brand-name small{display:none}
+  .steps{grid-template-columns:1fr}
+  .b2b,.anexo{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .section{margin-top:38px}
+  .hero-band{padding:26px 0 30px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .type-grid{grid-template-columns:1fr 1fr}
+  .prod-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .prod .body{padding:9px 10px 11px}
+  .prod h3{font-size:12.5px}
+  .prod .price{font-size:17px}
+  .prod .off{top:auto;bottom:0;right:0}
+  .line{grid-template-columns:56px 1fr;gap:8px}
+  .line img{width:56px;height:56px}
+  .line .right{grid-column:1/-1;flex-direction:row;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+  .foot{grid-template-columns:1fr}
+}
+@media (max-width:380px){.prod-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<div class="notice">
+  <div class="wrap">
+    <span><b>Demo de maqueta.</b> Precios simulados y datos pendientes de confirmación.</span>
+    <span>Fotos de referencia de rubro, no del local.</span>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="wrap head">
+    <a class="brand" href="#/inicio" aria-label="Distribuidora Mayorista Varsan, ir al inicio">
+      <img src="assets/varsan/logo-referencia.png" alt="Distribuidora Varsan" width="104" height="54">
+      <span class="brand-name"><strong>Bebidas</strong><small>Mayorista y minorista · Santiago del Estero</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#/inicio" data-nav="inicio">Inicio</a>
+      <a href="#/catalogo" data-nav="catalogo">Catálogo</a>
+      <a href="#/contacto" data-nav="contacto">Contacto</a>
+    </nav>
+    <form class="search" role="search" id="search-form">
+      <label class="sr-only" for="q">Buscar bebidas por nombre o código</label>
+      <input id="q" type="search" placeholder="Buscar bebida…" autocomplete="off">
+      <button type="submit" aria-label="Buscar">⌕</button>
+    </form>
+    <a class="quote-link" href="#/cotizacion" aria-label="Ver consulta, 0 ítems">Consulta <span class="badge" id="badge">0</span></a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- INICIO -->
+<section class="page" id="page-inicio" aria-labelledby="h-inicio">
+  <div class="hero-band">
+    <div class="wrap hero">
+      <div>
+        <span class="kicker">Santiago del Estero · bebidas</span>
+        <h1 id="h-inicio" tabindex="-1">Bebidas al por <em>mayor</em> y menor.</h1>
+        <p class="lead">Gaseosas, aguas, cervezas y jugos para tu comercio. Catálogo de maqueta: la lista vigente, los precios y la cobertura deben confirmarse con el negocio.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn amber" data-go="catalogo">Consultar productos</button>
+          <a class="btn line" href="#/contacto">Contacto</a>
+        </div>
+        <p class="note">«Consultar productos» es una propuesta de diseño ({{primary_cta}} pendiente). Anexo de cigarrillos anunciado; no se incluye catálogo.</p>
+        <div class="hero-chips" aria-hidden="true"><span>Gaseosas</span><span>Aguas</span><span>Cervezas</span><span>Jugos</span><span>Energizantes</span></div>
+      </div>
+      <div>
+        <figure class="hero-fig">
+          <img src="assets/varsan/rubro-imagenes/portada-bebidas.jpg" alt="Heladera de bebidas frías en un supermercado, imagen de referencia del rubro" width="1200" height="800">
+          <span class="cap">Foto de referencia de rubro · <a href="assets/varsan/rubro-imagenes/CREDITOS.md">créditos</a></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="data-strip">
+      <div class="data-cell"><b>Dirección</b><strong>Solís Oeste 1096 / Solís 992</strong><span>Dirección vigente pendiente: <span class="ph">{{confirmed_address}}</span>. No se publica mapa definitivo.</span></div>
+      <div class="data-cell"><b>Teléfono</b><strong>+54 385 592-0550</strong><span>Coincide con una publicación propia. WhatsApp no confirmado.</span></div>
+      <div class="data-cell"><b>Horario</b><strong>Lun a sáb · 08:00–13:00 / 17:00–22:00</strong><span>Domingo 09:00–13:00. Dato de directorio, a confirmar.</span></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Tipos de bebida</h2>
+        <a href="#/catalogo">Ver catálogo →</a>
+      </div>
+      <div class="type-grid" id="home-types"></div>
+      <p class="note" style="margin-top:9px">Los tipos y productos son ejemplos de maqueta; no representan el surtido completo del negocio.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Destacados de ejemplo</h2>
+        <a href="#/catalogo">Ver todos →</a>
+      </div>
+      <div class="prod-grid" id="home-featured"></div>
+      <p class="note" style="margin-top:10px">Precios de ejemplo (simulados). No representan la lista vigente ni una oferta del negocio.</p>
+    </div>
+
+    <div class="section">
+      <div class="anexo">
+        <div>
+          <h2>Anexo de cigarrillos</h2>
+          <p>La descripción pública del negocio anuncia un anexo de cigarrillos. Esta maqueta no muestra ese catálogo: la disponibilidad y las condiciones deben consultarse directamente.</p>
+        </div>
+        <a class="btn line" href="#/contacto">Consultar</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Cómo consultar</h2></div>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><h3>Elegí bebidas</h3><p>Filtrá por tipo, buscá por nombre o código de maqueta.</p></div>
+        <div class="step"><div class="n">02</div><h3>Armá tu consulta</h3><p>Sumá cantidades. Bultos y mínimos están pendientes.</p></div>
+        <div class="step"><div class="n">03</div><h3>Enviá el mensaje</h3><p>La maqueta prepara el texto; el local confirma stock, precio y entrega.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="b2b">
+        <div>
+          <h2>¿Comprás para un comercio?</h2>
+          <p>El alta de comercios y una lista propia son propuestas a definir. Estado: <span class="ph">{{account_approval_policy}}</span>. No se verificó un flujo de aprobación.</p>
+        </div>
+        <a class="btn cream" href="#/contacto">Ver condiciones</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section class="page" id="page-catalogo" aria-labelledby="h-catalogo" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Catálogo de ejemplo</span>
+      <h1 id="h-catalogo" tabindex="-1">Bebidas</h1>
+      <p class="lead" style="margin:0">Gaseosas, aguas, cervezas, jugos y energizantes. Estructura y estados para validar con el negocio.</p>
+      <p class="note" style="margin-top:8px">Precios simulados. Lista vigente: <span class="ph">{{price_visibility}}</span>.</p>
+    </div>
+
+    <div class="sim-states" role="group" aria-label="Simular estado de la lista">
+      <span>Simular:</span>
+      <button type="button" data-sim="normal" aria-pressed="true">Normal</button>
+      <button type="button" data-sim="loading" aria-pressed="false">Cargando</button>
+      <button type="button" data-sim="error" aria-pressed="false">Error</button>
+    </div>
+
+    <div class="catalog">
+      <aside class="filters" aria-label="Filtros">
+        <h2>Filtrar</h2>
+        <fieldset><legend>Tipo de bebida</legend><div id="filter-types"></div></fieldset>
+        <fieldset><legend>Disponibilidad</legend>
+          <label><input type="checkbox" id="f-stock"> Solo disponibles</label>
+          <label><input type="checkbox" id="f-offer"> Solo ofertas (ejemplo)</label>
+        </fieldset>
+        <fieldset><legend>Ordenar</legend>
+          <select id="sort" aria-label="Ordenar resultados">
+            <option value="relevance">Relevancia</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre A–Z</option>
+          </select>
+        </fieldset>
+        <button type="button" class="btn cream sm block" id="clear-filters">Limpiar filtros</button>
+        <p class="note" style="margin:9px 0 0">Filtros y precios simulados.</p>
+      </aside>
+      <div>
+        <div class="toolbar"><div class="count" id="cat-count" aria-live="polite"></div></div>
+        <div class="chips" id="chips"></div>
+        <div class="prod-grid" id="cat-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTO -->
+<section class="page" id="page-producto" aria-labelledby="h-producto" hidden>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Ubicación"><a href="#/inicio">Inicio</a> / <a href="#/catalogo">Catálogo</a> / <span id="crumb-name">Producto</span></nav>
+    <div id="detail-root"></div>
+    <div class="section" id="related-wrap">
+      <div class="section-head"><h2>Mismo tipo</h2></div>
+      <div class="prod-grid" id="related"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COTIZACIÓN -->
+<section class="page" id="page-cotizacion" aria-labelledby="h-cotizacion" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Solicitud</span>
+      <h1 id="h-cotizacion" tabindex="-1">Tu consulta</h1>
+      <p class="lead" style="margin:0">Revisá cantidades y prepará el mensaje. No confirma stock, precio ni entrega.</p>
+    </div>
+    <div id="quote-root"></div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="page" id="page-contacto" aria-labelledby="h-contacto" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Datos publicados</span>
+      <h1 id="h-contacto" tabindex="-1">Contacto</h1>
+      <p class="lead" style="margin:0">Teléfono, horarios y antecedentes de dirección. La dirección vigente no está resuelta.</p>
+      <p><span class="status-line">Validación pendiente</span></p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h2>Dirección</h2>
+        <p><strong>Av. Solís Oeste 1096</strong> <span class="note">· directorios y publicaciones anteriores</span></p>
+        <p><strong>Av. Solís 992</strong> <span class="note">· publicación posterior del mismo perfil</span></p>
+        <p class="pending-box"><strong>Dirección vigente:</strong> <span class="ph">{{confirmed_address}}</span>. No se resuelve como mudanza ni sucursal sin confirmación.</p>
+      </div>
+      <div class="contact-card">
+        <h2>Teléfonos</h2>
+        <p><a href="tel:+543855920550">+54 385 592-0550</a> <span class="note">· coincide con publicación propia</span></p>
+        <p><a href="tel:+543855733858">+54 385 573-3858</a> <span class="note">· agregado por directorios</span></p>
+        <p class="note">No se confirmó WhatsApp activo. El dominio histórico no se declara como tienda activa.</p>
+        <div class="links"><a href="https://www.facebook.com/distribuidoravarsan.ok/" target="_blank" rel="noopener">Facebook</a></div>
+      </div>
+      <div class="contact-card">
+        <h2>Horarios</h2>
+        <p>Lunes a sábados · 08:00–13:00 y 17:00–22:00</p>
+        <p>Domingos · 09:00–13:00</p>
+        <p class="note">Dato de directorio; confirmar antes de publicar. <span class="ph">{{opening_hours}}</span> representa la validación final.</p>
+      </div>
+      <div class="contact-card">
+        <h2>Reputación de campaña</h2>
+        <p>4,1 ★ · 685 reseñas en Google</p>
+        <p class="note">Dato del CSV de campaña, no revalidado. No se usa como testimonio ni certificación.</p>
+        <p class="note">Rubro comprobable: bebidas con anexo de cigarrillos. No se infiere un surtido mayor sin confirmación.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Datos pendientes</h2></div>
+      <table class="conditions">
+        <caption class="sr-only">Estado de los datos comerciales</caption>
+        <tbody>
+          <tr><th>Razón social y CUIT</th><td><span class="ph">{{legal_name}}</span> · <span class="ph">{{tax_id}}</span></td></tr>
+          <tr><th>Precios y moneda</th><td><span class="ph">{{price_visibility}}</span> · <span class="ph">{{currency}}</span>. ARS solo como referencia de maqueta.</td></tr>
+          <tr><th>Mínimos y bultos</th><td><span class="ph">{{order_rules}}</span></td></tr>
+          <tr><th>Alta de comercios</th><td><span class="ph">{{account_approval_policy}}</span></td></tr>
+          <tr><th>Entrega y cobertura</th><td><span class="ph">{{service_area}}</span> · <span class="ph">{{fulfillment_policy}}</span></td></tr>
+          <tr><th>Impuestos</th><td><span class="ph">{{tax_display_policy}}</span></td></tr>
+          <tr><th>Crédito y permisos</th><td><span class="ph">{{credit_policy}}</span> · <span class="ph">{{buyer_roles}}</span></td></tr>
+          <tr><th>Políticas comerciales</th><td><span class="ph">{{commercial_policies}}</span></td></tr>
+          <tr><th>Marca</th><td>Paleta muestreada del logo, no oficial. <span class="ph">{{tagline}}</span> · <span class="ph">{{brand_fonts}}</span>.</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:11px">Ocultar precios no es seguridad. Una lista protegida requiere autenticación y política definidas por el negocio.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="foot-brand">Varsan</div>
+      <p>Distribuidora mayorista de bebidas, con anexo de cigarrillos anunciado.</p>
+      <p>Santiago del Estero, Argentina · dirección vigente pendiente</p>
+    </div>
+    <div>
+      <h2>Contacto</h2>
+      <ul>
+        <li><a href="tel:+543855920550">+54 385 592-0550</a></li>
+        <li><a href="https://www.facebook.com/distribuidoravarsan.ok/" target="_blank" rel="noopener">Facebook</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Maqueta</h2>
+      <ul>
+        <li><a href="assets/varsan/rubro-imagenes/CREDITOS.md">Créditos de imágenes</a></li>
+        <li><a href="#/contacto">Datos pendientes</a></li>
+      </ul>
+      <p class="note" style="color:#8FA5A9;margin-top:6px">Demo documental. Precios y productos simulados.</p>
+    </div>
+  </div>
+  <div class="wrap foot-bottom"><span>© 2026 · Maqueta de demostración</span><span>Fotos de referencia de rubro, no del negocio.</span></div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const WA_NUMBER='5493855920550';
+const IMG='assets/varsan/rubro-imagenes/';
+const PRODUCTS=[
+  {sku:'VAR-501',name:'Gaseosa cola 2,25 L',family:'Gaseosas',pres:'Botella 2,25 L',type:'Unidad',price:2890,stock:true,offer:true,img:'bebidas-gaseosa.jpg',desc:'Gaseosa cola en botella familiar. Marca y presentación exacta a confirmar con la lista vigente. Producto de ejemplo.'},
+  {sku:'VAR-502',name:'Agua mineral 2 L',family:'Aguas',pres:'Botella 2 L',type:'Unidad',price:1290,stock:true,offer:false,img:'bebidas-agua.jpg',desc:'Agua mineral sin gas. Marca y origen a confirmar. La imagen es una referencia, no el producto comercializado.'},
+  {sku:'VAR-503',name:'Cerveza rubia 1 L',family:'Cervezas',pres:'Botella 1 L',type:'Unidad',price:3290,stock:true,offer:true,img:'bebidas-cerveza.jpg',desc:'Cerveza rubia en botella de 1 L. Marca y graduación a confirmar. Venta sujeta a normativa vigente.'},
+  {sku:'VAR-504',name:'Jugo de naranja 1 L',family:'Jugos',pres:'Botella 1 L',type:'Unidad',price:2390,stock:true,offer:false,img:'bebidas-jugo.jpg',desc:'Jugo de naranja listo para consumir. Marca y composición a confirmar. Producto de ejemplo.'},
+  {sku:'VAR-505',name:'Bebida energizante 500 ml',family:'Energizantes',pres:'Lata 500 ml',type:'Unidad',price:1890,stock:true,offer:false,img:'bebidas-energizante.jpg',desc:'Bebida energizante en lata. Marca y variantes a confirmar.'},
+  {sku:'VAR-506',name:'Limonada 1,5 L',family:'Jugos',pres:'Botella 1,5 L',type:'Unidad',price:2190,stock:false,offer:false,img:'bebidas-limonada.jpg',desc:'Limonada en botella. Se muestra agotada para validar el estado de falta de stock y la consulta de reposición.'},
+  {sku:'VAR-507',name:'Agua saborizada 1,5 L',family:'Aguas',pres:'Botella 1,5 L',type:'Unidad',price:1690,stock:true,offer:true,img:'bebidas-saborizada.jpg',desc:'Agua saborizada en botella. Sabores y marcas a confirmar. La imagen es de referencia.'}
+];
+const TYPES=['Gaseosas','Aguas','Cervezas','Jugos','Energizantes'];
+const state={q:'',families:new Set(),stockOnly:false,offerOnly:false,sort:'relevance',sim:'normal',cart:{},detailSku:null,detailQty:1,obs:'',delivery:'retiro',success:false};
+
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$ '+n.toLocaleString('es-AR');
+const bySku=sku=>PRODUCTS.find(p=>p.sku===sku);
+const countUnits=()=>Object.values(state.cart).reduce((a,b)=>a+b,0);
+const familyCount=f=>PRODUCTS.filter(p=>p.family===f).length;
+
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2800);}
+function updateBadge(){const n=countUnits();$('#badge').textContent=n;$('.quote-link').setAttribute('aria-label','Ver consulta, '+n+' ítems');}
+
+function card(p){
+  return `<article class="prod">
+    <div class="media">
+      <a href="#/producto/${p.sku}" aria-label="Ver ${esc(p.name)}"><img src="${IMG}${p.img}" alt="${esc(p.name)} — imagen de referencia del rubro" loading="lazy" width="400" height="400"></a>
+      <span class="type">${esc(p.family)}</span>${p.offer?'<span class="off">Oferta ejemplo</span>':''}
+    </div>
+    <div class="body">
+      <h3><a href="#/producto/${p.sku}">${esc(p.name)}</a></h3>
+      <span class="pres">${esc(p.pres)}</span>
+      <span class="price">${money(p.price)}<span class="sim">simulado</span></span>
+      <span class="avail ${p.stock?'':'out'}">${p.stock?'Disponible (ejemplo)':'Sin stock (ejemplo)'}</span>
+      <div class="actions"><button type="button" class="btn sm ${p.stock?'':'cream'}" data-add="${p.sku}" ${p.stock?'':'disabled'}>${p.stock?'Sumar':'Sin stock'}</button></div>
+    </div>
+  </article>`;
+}
+const paint=(el,list)=>{el.innerHTML=list.map(card).join('');};
+function paintFamilies(){
+  $('#filter-types').innerHTML=TYPES.map(f=>`<label><input type="checkbox" class="f-family" name="tipo" value="${f}" ${state.families.has(f)?'checked':''}> ${f} <span class="muted" style="font-size:10.5px">(${familyCount(f)})</span></label>`).join('');
+}
+function renderHome(){
+  $('#home-types').innerHTML=TYPES.map(f=>{
+    const img=PRODUCTS.find(p=>p.family===f).img;
+    return `<a class="type-card" href="#/catalogo?familia=${encodeURIComponent(f)}" data-family="${f}">
+      <img src="${IMG}${img}" alt="" loading="lazy" width="300" height="300">
+      <div class="body"><h3>${f}</h3><span>${familyCount(f)} de ejemplo</span></div>
+    </a>`;
+  }).join('');
+  const featured=PRODUCTS.filter(p=>p.offer).concat(PRODUCTS.filter(p=>!p.offer&&p.stock));
+  paint($('#home-featured'),featured.slice(0,4));
+}
+function filtered(){
+  let list=PRODUCTS.slice();const q=state.q.trim().toLowerCase();
+  if(q)list=list.filter(p=>(p.name+' '+p.sku+' '+p.family+' '+p.pres).toLowerCase().includes(q));
+  if(state.families.size)list=list.filter(p=>state.families.has(p.family));
+  if(state.stockOnly)list=list.filter(p=>p.stock);
+  if(state.offerOnly)list=list.filter(p=>p.offer);
+  if(state.sort==='price-asc')list.sort((a,b)=>a.price-b.price);
+  if(state.sort==='price-desc')list.sort((a,b)=>b.price-a.price);
+  if(state.sort==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'es'));
+  return list;
+}
+function renderCatalog(){
+  const grid=$('#cat-grid'),list=filtered();
+  $('#cat-count').textContent=state.sim==='normal'?list.length+(list.length===1?' producto de ejemplo':' productos de ejemplo'):'';
+  const chips=[];
+  if(state.q)chips.push(`<span class="chip">“${esc(state.q)}” <button type="button" data-drop="q" aria-label="Quitar búsqueda">×</button></span>`);
+  state.families.forEach(f=>chips.push(`<span class="chip">${esc(f)} <button type="button" data-drop="family" data-value="${esc(f)}" aria-label="Quitar ${esc(f)}">×</button></span>`));
+  if(state.stockOnly)chips.push('<span class="chip">Disponibles <button type="button" data-drop="stock" aria-label="Quitar disponibilidad">×</button></span>');
+  if(state.offerOnly)chips.push('<span class="chip">Ofertas <button type="button" data-drop="offer" aria-label="Quitar ofertas">×</button></span>');
+  $('#chips').innerHTML=chips.join('');
+  if(state.sim==='loading'){grid.innerHTML=Array.from({length:4}).map(()=>'<div class="skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>').join('');return;}
+  if(state.sim==='error'){grid.innerHTML=`<div class="errorbox" role="alert"><h2>No pudimos cargar el catálogo</h2><p>Estado simulado para probar la recuperación. En producción vendría de la lista del negocio.</p><button type="button" class="btn" data-retry>Reintentar</button></div>`;return;}
+  if(!list.length){grid.innerHTML=`<div class="empty"><h2>Sin resultados</h2><p>Probá otro término o quitá filtros. La búsqueda incluye nombre, código, tipo y presentación.</p><button type="button" class="btn cream" id="empty-clear">Limpiar filtros</button></div>`;return;}
+  paint(grid,list);
+}
+function clearFilters(){
+  state.q='';state.families.clear();state.stockOnly=false;state.offerOnly=false;state.sort='relevance';
+  $('#q').value='';$('#f-stock').checked=false;$('#f-offer').checked=false;$('#sort').value='relevance';
+  paintFamilies();renderCatalog();
+}
+function renderDetail(){
+  const p=bySku(state.detailSku),root=$('#detail-root');if(!p)return;
+  $('#crumb-name').textContent=p.name;
+  root.innerHTML=`<div class="detail">
+    <figure class="detail-fig"><img src="${IMG}${p.img}" alt="${esc(p.name)} — imagen de referencia del rubro" width="700" height="700"><figcaption>Imagen de referencia de rubro. No es una foto del producto comercializado.</figcaption></figure>
+    <div>
+      <span class="kicker" style="color:var(--red)">${esc(p.family)} · ${esc(p.type)}</span>
+      <h1 id="h-producto" tabindex="-1">${esc(p.name)}</h1>
+      <div class="sku">Código ${p.sku} · código de maqueta</div>
+      <div class="price-box">
+        <div class="big">${money(p.price)}<span class="sim">simulado</span></div>
+        <p class="note">Precio de ejemplo (simulado). Lista vigente y visibilidad: <span class="ph">{{price_visibility}}</span>.</p>
+      </div>
+      <p class="stock-line ${p.stock?'':'out'}">${p.stock?'Disponible en la maqueta · stock real a confirmar':'Sin stock (ejemplo) · consultá reposición'}</p>
+      <label class="qty-label" for="qty">Cantidad</label>
+      <div class="qty"><button type="button" data-step="-1" aria-label="Restar una unidad">−</button><input id="qty" type="number" min="1" step="1" value="${state.detailQty}" aria-describedby="qty-help"><button type="button" data-step="1" aria-label="Sumar una unidad">+</button></div>
+      <p class="note" id="qty-help" style="margin-top:5px">Mínimo y paso de la maqueta: 1 unidad. Reglas reales: <span class="ph">{{minimum_quantity}}</span> / <span class="ph">{{quantity_step}}</span>.</p>
+      <div class="add-row"><button type="button" class="btn" data-add-detail="${p.sku}" ${p.stock?'':'disabled'}>Sumar a la consulta</button><a class="btn cream" href="#/cotizacion">Ver consulta</a></div>
+      <p class="inline-note" id="detail-note" role="status" aria-live="polite"></p>
+      <p style="font-size:14px">${esc(p.desc)}</p>
+      <table class="spec-table"><tbody>
+        <tr><th>Presentación</th><td>${esc(p.pres)}</td></tr>
+        <tr><th>Unidad de venta</th><td>${esc(p.type)}</td></tr>
+        <tr><th>Disponibilidad</th><td>${p.stock?'Disponible (ejemplo)':'Agotado (ejemplo)'}</td></tr>
+        <tr><th>Mínimo de compra</th><td><span class="ph">{{minimum_quantity}}</span></td></tr>
+        <tr><th>Paso de cantidad</th><td><span class="ph">{{quantity_step}}</span></td></tr>
+        <tr><th>Origen del catálogo</th><td><span class="ph">{{data_sources}}</span></td></tr>
+      </tbody></table>
+      <ul class="rules"><li>Precios y stock de ejemplo.</li><li>La consulta no reserva mercadería.</li><li>Bultos y formas de pago: <span class="ph">{{order_rules}}</span>.</li></ul>
+    </div>
+  </div>`;
+  const rel=PRODUCTS.filter(x=>x.family===p.family&&x.sku!==p.sku).slice(0,4);
+  $('#related').innerHTML=rel.length?rel.map(card).join(''):'<p class="note">Sin otros productos de ejemplo en este tipo.</p>';
+  $('#related-wrap').hidden=false;
+}
+function cartLines(){return Object.entries(state.cart).map(([sku,qty])=>({p:bySku(sku),qty})).filter(x=>x.p);}
+function renderQuote(){
+  const root=$('#quote-root'),lines=cartLines();
+  if(!lines.length){root.innerHTML=`<div class="quote-empty"><h2>Tu consulta está vacía</h2><p>Sumá bebidas desde el catálogo para preparar un mensaje con códigos y cantidades. No se envía nada automáticamente.</p><a class="btn" href="#/catalogo">Ir al catálogo</a></div>`;return;}
+  const total=lines.reduce((a,l)=>a+l.p.price*l.qty,0);
+  root.innerHTML=`<div class="quote-wrap">
+    <div>
+      <div class="lines">${lines.map(({p,qty})=>`<div class="line">
+        <img src="${IMG}${p.img}" alt="" width="76" height="66">
+        <div><h3>${esc(p.name)}</h3><div class="meta">${p.sku} · ${esc(p.pres)}</div>
+          <div class="qty"><button type="button" data-line-step="-1" data-sku="${p.sku}" aria-label="Restar una unidad de ${esc(p.name)}">−</button><input type="number" min="1" step="1" value="${qty}" name="cantidad-${p.sku}" data-line-qty="${p.sku}" aria-label="Cantidad de ${esc(p.name)}"><button type="button" data-line-step="1" data-sku="${p.sku}" aria-label="Sumar una unidad de ${esc(p.name)}">+</button></div>
+        </div>
+        <div class="right"><span class="sub">${money(p.price*qty)}</span><button type="button" class="link-btn" data-remove="${p.sku}">Quitar</button></div>
+      </div>`).join('')}</div>
+      <div class="field"><label for="delivery">Entrega</label><select id="delivery"><option value="retiro" ${state.delivery==='retiro'?'selected':''}>Retiro en el local (a confirmar)</option><option value="envio" ${state.delivery==='envio'?'selected':''}>Envío (a confirmar)</option></select></div>
+      <div class="field"><label for="obs">Observaciones</label><textarea id="obs" maxlength="400" placeholder="Ej.: consulto por bultos cerrados y formas de pago.">${esc(state.obs)}</textarea></div>
+      <p class="note">Importes de ejemplo. Impuestos: <span class="ph">{{tax_display_policy}}</span>. Entrega: <span class="ph">{{fulfillment_policy}}</span>.</p>
+    </div>
+    <aside class="summary" aria-label="Resumen">
+      <h2>Resumen</h2>
+      <div class="sum-row"><span>Ítems</span><strong>${countUnits()}</strong></div>
+      <div class="sum-row"><span>Subtotal (simulado)</span><strong>${money(total)}</strong></div>
+      <div class="sum-row"><span>Impuestos</span><strong>{{tax_display_policy}}</strong></div>
+      <div class="sum-row"><span>Entrega</span><strong>A confirmar</strong></div>
+      <div class="sum-total"><span>Total estimado</span><span>${money(total)}</span></div>
+      <p class="note">No incluye impuestos, descuentos ni flete.</p>
+      <button type="button" class="btn block" id="prepare" ${state.success?'disabled':''}>${state.success?'Mensaje preparado':'Preparar WhatsApp'}</button>
+      <div id="success-slot">${state.success?'<div class="success" role="status"><strong>Solicitud preparada (no enviada)</strong>Se abrió WhatsApp con el detalle. El local confirma disponibilidad, precio y entrega.</div>':''}</div>
+      <p class="note">El número no está confirmado como WhatsApp activo. Verificá antes de enviar.</p>
+    </aside>
+  </div>`;
+}
+function waMessage(){
+  const rows=cartLines().map(({p,qty})=>`• ${qty} × ${p.sku} · ${p.name} (${p.pres})`).join('\n');
+  const entrega=state.delivery==='retiro'?'Retiro en el local (a confirmar)':'Envío (a confirmar)';
+  return `Hola Distribuidora Varsan, quiero consultar por este pedido:\n${rows}\n\nEntrega: ${entrega}${state.obs.trim()?'\nObservaciones: '+state.obs.trim():''}\n\nEs una solicitud de la maqueta; queda sujeta a confirmación.`;
+}
+const PAGES=['inicio','catalogo','producto','cotizacion','contacto'];
+function route(){
+  const raw=location.hash.replace(/^#\/?/,'');const [path,query]=raw.split('?');const parts=path.split('/');
+  let page=parts[0]||'inicio';if(!PAGES.includes(page))page='inicio';
+  if(page==='catalogo'&&query){const params=new URLSearchParams(query);if(params.get('q')!==null){state.q=params.get('q');$('#q').value=state.q;}if(params.get('familia'))state.families=new Set([params.get('familia')]);}
+  if(page==='producto'){const p=bySku(parts[1]);if(!p){location.hash='#/catalogo';return;}state.detailSku=p.sku;state.detailQty=1;renderDetail();}
+  $$('section.page').forEach(s=>s.hidden=s.id!=='page-'+page);
+  $$('[data-nav]').forEach(a=>{const on=a.dataset.nav===page||(page==='producto'&&a.dataset.nav==='catalogo');if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(page==='inicio')renderHome();
+  if(page==='catalogo'){paintFamilies();renderCatalog();}
+  if(page==='cotizacion')renderQuote();
+  const h=$('section.page:not([hidden]) h1');if(h)h.focus({preventScroll:true});
+  window.scrollTo({top:0,behavior:'auto'});
+}
+window.addEventListener('hashchange',route);
+function addToCart(sku,qty=1){state.cart[sku]=(state.cart[sku]||0)+qty;updateBadge();toast('Sumado a la consulta (demo) · '+bySku(sku).name);}
+function gotoCatalog(family){state.families=new Set([family]);location.hash='#/catalogo';if(location.hash==='#/catalogo')route();}
+
+$('#search-form').addEventListener('submit',e=>{e.preventDefault();state.q=$('#q').value.trim();if(location.hash==='#/catalogo')renderCatalog();else location.hash='#/catalogo';});
+document.addEventListener('click',e=>{
+  const go=e.target.closest('[data-go]');if(go){location.hash='#/'+go.dataset.go;return;}
+  const fam=e.target.closest('[data-family]');if(fam){e.preventDefault();gotoCatalog(fam.dataset.family);return;}
+  const add=e.target.closest('[data-add]');if(add){addToCart(add.dataset.add);return;}
+  const ad=e.target.closest('[data-add-detail]');if(ad){addToCart(ad.dataset.addDetail,state.detailQty);$('#detail-note').textContent='Sumado a la consulta (demo).';return;}
+  const st=e.target.closest('[data-step]');if(st){const input=$('#qty');let v=parseInt(input.value,10)||1;v=Math.max(1,Math.min(999,v+parseInt(st.dataset.step,10)));input.value=v;state.detailQty=v;return;}
+  const ls=e.target.closest('[data-line-step]');if(ls){const sku=ls.dataset.sku;state.cart[sku]=Math.max(1,Math.min(999,(state.cart[sku]||1)+parseInt(ls.dataset.lineStep,10)));updateBadge();renderQuote();return;}
+  const rm=e.target.closest('[data-remove]');if(rm){delete state.cart[rm.dataset.remove];state.success=false;updateBadge();renderQuote();toast('Producto quitado');return;}
+  const sim=e.target.closest('[data-sim]');if(sim){state.sim=sim.dataset.sim;$$('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',String(b===sim)));renderCatalog();return;}
+  if(e.target.closest('[data-retry]')){state.sim='normal';$$('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sim==='normal')));renderCatalog();return;}
+  if(e.target.closest('#empty-clear')){clearFilters();return;}
+  const drop=e.target.closest('[data-drop]');if(drop){const k=drop.dataset.drop;if(k==='q'){state.q='';$('#q').value='';}if(k==='family'){state.families.delete(drop.dataset.value);paintFamilies();}if(k==='stock'){state.stockOnly=false;$('#f-stock').checked=false;}if(k==='offer'){state.offerOnly=false;$('#f-offer').checked=false;}renderCatalog();return;}
+  if(e.target.closest('#prepare')){
+    const btn=$('#prepare');btn.disabled=true;btn.textContent='Preparando mensaje…';
+    setTimeout(()=>{state.success=true;window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(waMessage()),'_blank','noopener');renderQuote();const s=$('#success-slot');if(s)s.scrollIntoView({block:'nearest'});},650);
+    return;
+  }
+});
+$('#clear-filters').addEventListener('click',clearFilters);
+document.addEventListener('change',e=>{
+  if(e.target.classList.contains('f-family')){const v=e.target.value;if(e.target.checked)state.families.add(v);else state.families.delete(v);renderCatalog();}
+  if(e.target.id==='f-stock'){state.stockOnly=e.target.checked;renderCatalog();}
+  if(e.target.id==='f-offer'){state.offerOnly=e.target.checked;renderCatalog();}
+  if(e.target.id==='sort'){state.sort=e.target.value;renderCatalog();}
+  if(e.target.id==='delivery')state.delivery=e.target.value;
+  if(e.target.id==='obs')state.obs=e.target.value;
+  if(e.target.id==='qty'){let v=parseInt(e.target.value,10);if(isNaN(v)||v<1)v=1;if(v>999)v=999;e.target.value=v;state.detailQty=v;}
+  if(e.target.matches('[data-line-qty]')){const sku=e.target.dataset.lineQty;let v=parseInt(e.target.value,10);if(isNaN(v)||v<1)v=1;if(v>999)v=999;state.cart[sku]=v;updateBadge();renderQuote();}
+});
+paintFamilies();updateBadge();route();
+</script>
+</body>
+</html>
+
+

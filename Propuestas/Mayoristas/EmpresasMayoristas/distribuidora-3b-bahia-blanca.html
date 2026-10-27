@@ -1,0 +1,765 @@
+﻿<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distribuidora 3B · Demo de maqueta</title>
+<meta name="description" content="Maqueta de catálogo de alimentos a granel para Distribuidora 3B, Bahía Blanca. Datos publicados y precios simulados.">
+<style>
+:root{
+  --paper:AF7F0E2; --paper-2:AEFE4CF; --card:AFFFDF7;
+  --red:AB30000; --red-dark:A820000; --yellow:AFFE01B; --yellow-soft:AFFF6B8;
+  --brown:A3A2A1E; --brown-2:A5C4838; --ink:A2A1F17; --ink-2:A5A4A3D; --ink-3:A7A6A5B;
+  --olive:A5E6238;
+  --line:ADCCDB4; --line-2:AC3B092;
+  --focus:A0B57D0;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.56;background-image:radial-gradient(var(--line) .7px,transparent .7px);background-size:7px 7px}
+img{display:block;max-width:100%;height:auto}
+a{color:var(--red-dark);text-underline-offset:3px}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.035em;line-height:1.02}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+h1[tabindex="-1"]:focus{outline:none}
+.skip{position:absolute;left:12px;top:-70px;z-index:99;background:var(--brown);color:Afff;padding:12px 18px}
+.skip:focus{top:12px}
+.wrap{max-width:1220px;margin:0 auto;padding:0 20px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.muted{color:var(--ink-2)}
+.note{font-size:12px;color:var(--ink-3);line-height:1.5}
+.ph{font-family:var(--mono);font-size:.88em;background:AFFF0AC;border-bottom:1px dashed AA97900;padding:0 2px;white-space:nowrap}
+.sim{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border:1px solid currentColor;padding:1px 5px;vertical-align:3px;margin-left:5px}
+
+/* Aviso */
+.notice{background:var(--brown);color:AF2E7D4;font-size:11px}
+.notice .wrap{display:flex;justify-content:center;gap:8px 18px;flex-wrap:wrap;padding:7px 20px;text-align:center}
+.notice b{color:var(--yellow)}
+
+/* Cabecera */
+.site-head{background:var(--paper);border-bottom:2px solid var(--brown);position:sticky;top:0;z-index:30}
+.head{display:flex;align-items:center;gap:16px 22px;min-height:84px;flex-wrap:wrap;padding:9px 0}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none}
+.brand img{width:52px;height:52px;border:2px solid var(--brown);border-radius:50%;background:Afff;object-fit:cover}
+.brand-name{display:flex;flex-direction:column;line-height:1.02}
+.brand-name strong{font-size:21px;letter-spacing:-.02em}
+.brand-name small{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:3px}
+.nav{display:flex;gap:18px;margin-left:6px}
+.nav a{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:10px 0;border-bottom:2px solid transparent}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--red);border-bottom-color:var(--red)}
+.search{display:flex;flex:1 1 210px;max-width:310px;margin-left:auto;min-width:180px}
+.search input{flex:1;min-width:0;height:42px;border:1px solid var(--line-2);border-right:0;background:Afff;padding:0 12px;font-size:13.5px}
+.search button{width:45px;height:42px;border:1px solid var(--line-2);border-left:0;background:var(--yellow);color:var(--ink);font-size:16px;cursor:pointer}
+.search button:hover{background:AFFD000}
+.quote-link{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;background:var(--red);color:Afff;text-decoration:none;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.quote-link:hover{background:var(--red-dark)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:21px;height:21px;background:var(--yellow);color:var(--ink);font-size:11px;font-weight:800;padding:0 5px}
+
+/* Páginas */
+.page{padding:0 0 68px}
+.page[hidden]{display:none}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red-dark);border:1px solid var(--line-2);background:var(--card);padding:4px 8px;margin-bottom:13px}
+.lead{font-size:17px;color:var(--ink-2);max-width:64ch}
+.section{margin-top:52px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;border-bottom:2px solid var(--brown);padding-bottom:9px;margin-bottom:18px}
+.section-head h2{font-size:clamp(24px,3.2vw,33px)}
+.section-head a{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;background:var(--red);color:Afff;border:2px solid var(--red);font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;border-radius:2px}
+.btn:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn.yellow{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.btn.yellow:hover{background:AFFD000;border-color:AFFD000}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--brown)}
+.btn.line:hover{background:var(--card)}
+.btn.sm{min-height:38px;padding:0 13px;font-size:10.5px}
+.btn.block{width:100%}
+.btn[disabled]{background:AE3D8C6;border-color:AE3D8C6;color:A7B6E5E;cursor:not-allowed}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.02fr .98fr;gap:36px;align-items:center;padding-top:34px}
+.hero h1{font-size:clamp(40px,5.7vw,70px);margin-bottom:14px}
+.hero h1 em{font-style:normal;background:var(--yellow);padding:0 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin:23px 0 11px}
+.hero-fig{margin:0;position:relative;background:var(--card);padding:9px;border:1px solid var(--line-2);box-shadow:6px 6px 0 var(--yellow)}
+.hero-fig img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.hero-fig figcaption{font-family:var(--mono);font-size:9px;color:var(--ink-3);padding-top:5px;display:flex;justify-content:space-between}
+.stamp{position:absolute;right:-12px;top:-18px;width:92px;height:92px;border:3px solid var(--red);border-radius:50%;display:grid;place-items:center;background:var(--paper);color:var(--red);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-align:center;transform:rotate(-11deg);line-height:1.2;padding:8px}
+.motto{display:flex;gap:8px 12px;align-items:center;flex-wrap:wrap;background:var(--brown);color:AF7ECD9;padding:10px 15px;margin-top:26px}
+.motto b{color:var(--yellow);font-size:15px;letter-spacing:.02em}
+.motto span{font-size:10.5px;color:ACDBEA8}
+.cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
+.cat-card{background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.cat-card:hover{border-color:var(--brown)}
+.cat-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-bottom:2px solid var(--yellow)}
+.cat-card .body{padding:7px 9px 9px}
+.cat-card h3{font-size:15px;margin-bottom:1px}
+.cat-card span{font-family:var(--mono);font-size:9px;color:var(--ink-3)}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:13px}
+.prod{background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column}
+.prod:hover{border-color:var(--line-2);box-shadow:0 5px 14px rgba(58,42,30,.08)}
+.prod .media{position:relative;background:AFBF6EA}
+.prod .media img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.prod .fam{position:absolute;left:0;top:0;background:var(--brown);color:AF7ECD9;font-family:var(--mono);font-size:8px;letter-spacing:.09em;text-transform:uppercase;padding:4px 6px}
+.prod .off{position:absolute;right:0;top:0;background:var(--yellow);color:var(--ink);font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:4px 6px}
+.prod .body{padding:10px 11px 12px;display:flex;flex-direction:column;gap:3px;flex:1}
+.prod h3{font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:0;line-height:1.3}
+.prod h3 a{color:var(--ink);text-decoration:none}
+.prod h3 a:hover{text-decoration:underline}
+.prod .weight{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase}
+.prod .price{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--red-dark);margin-top:1px}
+.prod .avail{font-family:var(--mono);font-size:9px;color:A2C6B45}
+.prod .avail.out{color:var(--red);font-weight:700}
+.prod .actions{margin-top:auto;padding-top:8px}
+.prod .actions .btn{width:100%}
+.ship-band{background:var(--yellow);border:2px solid var(--brown);padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.ship-band h2{font-size:clamp(21px,2.9vw,29px);margin-bottom:4px}
+.ship-band p{font-size:12.5px;margin:0;max-width:66ch}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.step{background:var(--card);border:1px solid var(--line);padding:14px 16px;border-left:4px solid var(--red)}
+.step .n{font-family:var(--mono);font-size:10px;color:var(--red)}
+.step h3{font-size:17px;margin:4px 0 3px}
+.step p{font-size:12px;color:var(--ink-2);margin:0}
+.b2b{background:var(--brown);color:AF2E7D4;padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.b2b h2{color:Afff;font-size:clamp(21px,2.9vw,29px);margin-bottom:4px}
+.b2b p{color:ACDBEA8;font-size:12.5px;margin:0;max-width:64ch}
+
+/* Catálogo */
+.page-head{padding:30px 0 15px;border-bottom:2px solid var(--brown)}
+.page-head h1{font-size:clamp(34px,4.6vw,52px);margin:6px 0}
+.sim-states{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;margin:14px 0 18px}
+.sim-states span{color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase}
+.sim-states button{background:var(--card);border:1px solid var(--line-2);padding:4px 10px;font-size:10px;cursor:pointer;min-height:30px}
+.sim-states button[aria-pressed="true"]{background:var(--brown);color:Afff;border-color:var(--brown)}
+.catalog{display:grid;grid-template-columns:228px 1fr;gap:25px;align-items:start}
+.filters{background:var(--card);border:1px solid var(--line);padding:14px;position:sticky;top:108px}
+.filters h2{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;background:var(--brown);color:var(--yellow);padding:6px 8px;margin:-14px -14px 11px}
+.filters fieldset{border:0;padding:0;margin:0 0 12px}
+.filters legend{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:3px}
+.filters label{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 0;cursor:pointer}
+.filters input[type=checkbox]{width:16px;height:16px;accent-color:var(--red)}
+.filters select{width:100%;height:33px;border:1px solid var(--line-2);background:Afff;padding:0 6px;font-size:12px}
+.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.count{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-2)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9.5px;background:var(--yellow-soft);border:1px solid AE3C85F;padding:2px 3px 2px 8px}
+.chip button{width:20px;height:20px;border:1px solid AE3C85F;background:Afff;cursor:pointer;line-height:1;font-size:11px}
+.empty,.errorbox{grid-column:1/-1;background:var(--card);border:2px dashed var(--line-2);padding:40px 22px;text-align:center}
+.empty h2,.errorbox h2{font-size:26px;margin-bottom:7px}
+.empty p,.errorbox p{font-size:13px;color:var(--ink-2);max-width:50ch;margin:0 auto 14px}
+.errorbox{border-color:var(--red);background:AFFF5F1}
+.skeleton{background:var(--card);border:1px solid var(--line)}
+.skeleton .sk-img{aspect-ratio:1/1;background:linear-gradient(100deg,AEFE5D2 30%,AFAF3E5 50%,AEFE5D2 70%);background-size:200% 100%;animation:sk 1.2s linear infinite}
+.skeleton .sk-line{height:9px;margin:11px;background:AEFE5D2}
+.skeleton .sk-line.short{width:55%;margin-bottom:14px}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.skeleton .sk-img{animation:none}}
+
+/* Detalle */
+.crumbs{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin:20px 0 14px}
+.crumbs a{color:var(--ink-3)}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+.detail-fig{margin:0;position:sticky;top:108px;border:1px solid var(--line-2);background:var(--card);padding:8px}
+.detail-fig img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.detail-fig figcaption{font-family:var(--mono);font-size:9px;color:var(--ink-3);padding-top:5px}
+.detail h1{font-size:clamp(30px,4.2vw,46px);margin:8px 0 5px}
+.sku{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.price-box{border-top:2px solid var(--brown);border-bottom:1px solid var(--line-2);padding:12px 0;margin:16px 0}
+.price-box .big{font-size:33px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:var(--red-dark)}
+.stock-line{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:A2C6B45;margin:0 0 12px}
+.stock-line.out{color:var(--red)}
+.qty-label{display:block;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.qty{display:flex}
+.qty button{width:42px;height:44px;border:1px solid var(--line-2);background:var(--card);cursor:pointer;font-size:19px;line-height:1}
+.qty button:first-child{border-right:0}
+.qty button:last-child{border-left:0}
+.qty input{width:60px;height:44px;border:1px solid var(--line-2);border-left:0;border-right:0;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+.add-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.inline-note{font-size:11.5px;color:var(--red);min-height:18px;margin-top:5px;font-weight:700}
+.spec-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:17px}
+.spec-table th,.spec-table td{text-align:left;padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.spec-table th{width:42%;font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);font-weight:400}
+.rules{margin:12px 0 0;padding-left:17px;font-size:12px;color:var(--ink-2)}
+.rules li{margin-bottom:4px}
+
+/* Cotización */
+.quote-wrap{display:grid;grid-template-columns:1fr 316px;gap:24px;align-items:start;margin-top:18px}
+.lines{background:var(--card);border:1px solid var(--line)}
+.line{display:grid;grid-template-columns:74px 1fr auto;gap:11px;padding:11px;border-bottom:1px solid var(--line);align-items:center}
+.line:last-child{border-bottom:0}
+.line img{width:74px;height:64px;object-fit:cover}
+.line h3{font-family:var(--sans);font-size:13.5px;font-weight:700;letter-spacing:0;line-height:1.3}
+.line .meta{font-family:var(--mono);font-size:9px;color:var(--ink-3)}
+.line .qty{margin-top:6px}
+.line .qty button{width:29px;height:29px;font-size:14px}
+.line .qty input{width:42px;height:29px;font-size:12px}
+.line .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.line .sub{font-weight:800;font-variant-numeric:tabular-nums}
+.link-btn{background:none;border:0;padding:2px;font-size:10px;color:var(--red);text-decoration:underline;cursor:pointer;min-height:24px}
+.summary{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--yellow);padding:15px;position:sticky;top:108px}
+.summary h2{font-size:22px;margin-bottom:8px}
+.sum-row{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:6px 0;color:var(--ink-2);border-bottom:1px dotted var(--line)}
+.sum-row strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.sum-total{display:flex;justify-content:space-between;gap:10px;padding-top:8px;font-weight:800;font-size:15.5px}
+.summary .btn{margin-top:10px}
+.field{margin-top:12px}
+.field label{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.field textarea,.field select{width:100%;border:1px solid var(--line-2);padding:7px;font-size:12.5px;background:Afff}
+.field textarea{min-height:70px;resize:vertical}
+.success{background:AEDF5EC;border:1px solid AB9D3B4;padding:9px 11px;margin-top:8px;font-size:11.5px;color:A284C24}
+.success strong{display:block;margin-bottom:2px}
+.quote-empty{background:var(--card);border:2px dashed var(--line-2);padding:44px 22px;text-align:center;margin-top:18px}
+.quote-empty h2{font-size:26px;margin-bottom:7px}
+.quote-empty p{font-size:13px;color:var(--ink-2);max-width:50ch;margin:0 auto 14px}
+
+/* Contacto */
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:20px}
+.contact-card{background:var(--card);border:1px solid var(--line);padding:17px 18px}
+.contact-card h2{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.contact-card p{font-size:13.5px;margin:0 0 5px}
+.contact-card .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px;font-size:11.5px;font-weight:700}
+.pending-box{background:AFFF2C0;border:1px dashed AC79A1F;padding:8px 10px;font-size:12px;margin-top:6px}
+.conditions{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+.conditions th,.conditions td{text-align:left;padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.conditions th{width:32%;font-family:var(--mono);font-size:9px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);font-weight:400}
+.status-line{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+.status-line::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+
+/* Pie */
+footer{background:var(--brown);color:AD8CAB4}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px;padding:30px 0 21px}
+footer h2{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:AA3907A;margin-bottom:8px}
+footer p,footer li{font-size:11.5px;margin:0 0 4px}
+footer ul{list-style:none;padding:0;margin:0}
+footer a{color:Afff}
+.foot-brand{font-size:22px;font-weight:800;color:Afff;line-height:1;margin-bottom:6px}
+.foot-bottom{border-top:1px solid A55432F;padding:11px 0 20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;color:AA3907A}
+.toast{position:fixed;left:50%;bottom:16px;transform:translate(-50%,130%);background:var(--brown);color:Afff;padding:10px 15px;font-size:12px;font-weight:700;z-index:80;transition:transform .2s;max-width:calc(100vw - 28px);text-align:center;border-left:4px solid var(--yellow)}
+.toast.show{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}html{scroll-behavior:auto}}
+
+/* Responsive */
+@media (max-width:1024px){
+  .hero{grid-template-columns:1fr;gap:23px}
+  .hero-fig img{aspect-ratio:16/9}
+  .cat-grid{grid-template-columns:repeat(3,1fr)}
+  .detail{grid-template-columns:1fr;gap:21px}
+  .detail-fig{position:static;max-width:520px}
+  .catalog{grid-template-columns:1fr}
+  .filters{position:static}
+  .quote-wrap{grid-template-columns:1fr}
+  .summary{position:static}
+}
+@media (max-width:820px){
+  .head{display:grid;grid-template-columns:1fr auto;gap:7px 10px;padding:9px 0;min-height:auto}
+  .brand{grid-column:1;grid-row:1}
+  .quote-link{grid-column:2;grid-row:1;justify-self:end}
+  .search{grid-column:1/-1;grid-row:2;max-width:none;width:100%;margin-left:0;min-width:0;flex:none}
+  .nav{grid-column:1/-1;grid-row:3;margin:0;gap:13px;overflow-x:auto;border-top:1px solid var(--line);padding-top:2px}
+  .nav a{padding:6px 0;font-size:10.5px;white-space:nowrap}
+  .brand-name small{display:none}
+  .steps{grid-template-columns:1fr}
+  .b2b,.ship-band{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .section{margin-top:36px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .cat-grid{grid-template-columns:1fr 1fr}
+  .prod-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .prod .body{padding:8px 9px 10px}
+  .prod h3{font-size:12px}
+  .prod .price{font-size:16px}
+  .prod .off{top:auto;bottom:0;right:0}
+  .line{grid-template-columns:54px 1fr;gap:8px}
+  .line img{width:54px;height:54px}
+  .line .right{grid-column:1/-1;flex-direction:row;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+  .foot{grid-template-columns:1fr}
+  .stamp{width:74px;height:74px;font-size:8px;right:-6px;top:-12px}
+}
+@media (max-width:380px){.prod-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="Amain">Saltar al contenido</a>
+
+<div class="notice">
+  <div class="wrap">
+    <span><b>Demo de maqueta.</b> Precios y productos de ejemplo (simulados).</span>
+    <span>Fotos de referencia de rubro, no del local.</span>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="wrap head">
+    <a class="brand" href="A/inicio" aria-label="Distribuidora 3B, ir al inicio">
+      <img src="assets/3b/logo-referencia.png" alt="" width="52" height="52">
+      <span class="brand-name"><strong>Distribuidora 3B</strong><small>Alimentos a granel · Bahía Blanca</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="A/inicio" data-nav="inicio">Inicio</a>
+      <a href="A/catalogo" data-nav="catalogo">Catálogo</a>
+      <a href="A/contacto" data-nav="contacto">Contacto</a>
+    </nav>
+    <form class="search" role="search" id="search-form">
+      <label class="sr-only" for="q">Buscar productos por nombre o código</label>
+      <input id="q" type="search" placeholder="Buscar producto…" autocomplete="off">
+      <button type="submit" aria-label="Buscar">⌕</button>
+    </form>
+    <a class="quote-link" href="A/cotizacion" aria-label="Ver consulta, 0 ítems">Consulta <span class="badge" id="badge">0</span></a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- INICIO -->
+<section class="page" id="page-inicio" aria-labelledby="h-inicio">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <span class="kicker">Bahía Blanca · Brasil 977</span>
+        <h1 id="h-inicio" tabindex="-1">Alimentos <em>a granel</em>, por mayor y menor.</h1>
+        <p class="lead">Condimentos, harinas, hierbas, frutos secos, legumbres y repostería. El negocio anuncia venta mayorista y minorista y envíos nacionales; condiciones y stock están pendientes de confirmar.</p>
+        <div class="hero-actions">
+          <a class="btn" href="A/catalogo">Consultar productos</a>
+          <a class="btn line" href="A/contacto">Contacto</a>
+        </div>
+        <p class="note">«Consultar productos» es una propuesta de diseño ({{primary_cta}} pendiente).</p>
+      </div>
+      <div>
+        <figure class="hero-fig">
+          <img src="assets/3b/rubro-imagenes/portada-granel.jpg" alt="Granos y legumbres a granel en un mercado, imagen de referencia del rubro" width="1024" height="768">
+          <span class="stamp">A<br>GRANEL</span>
+          <figcaption><span>Foto de referencia de rubro</span><a href="assets/3b/rubro-imagenes/CREDITOS.md">créditos</a></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="motto">
+      <b>Bueno, Beneficioso y Barato</b>
+      <span>Frase visible en el perfil y la gráfica del negocio. No se atribuye carácter de eslogan legal.</span>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Familias a granel</h2>
+        <a href="A/catalogo">Ver catálogo →</a>
+      </div>
+      <div class="cat-grid" id="home-cats"></div>
+      <p class="note" style="margin-top:9px">Familias anunciadas por el negocio. Los productos y pesos de esta maqueta son ejemplos.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Destacados de ejemplo</h2>
+        <a href="A/catalogo">Ver todos →</a>
+      </div>
+      <div class="prod-grid" id="home-featured"></div>
+      <p class="note" style="margin-top:9px">Precios de ejemplo (simulados). La venta a granel se anuncia, pero mínimos y múltiplos por producto están pendientes.</p>
+    </div>
+
+    <div class="section">
+      <div class="ship-band">
+        <div>
+          <h2>Envíos nacionales anunciados</h2>
+          <p>Una publicación del negocio anuncia envíos a todo el país. Costos, plazos y condiciones actuales: <span class="ph">{{fulfillment_policy}}</span>.</p>
+        </div>
+        <a class="btn" href="A/contacto">Ver condiciones</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Cómo consultar</h2></div>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><h3>Elegí el producto</h3><p>Filtrá por familia y buscá por nombre o código de maqueta.</p></div>
+        <div class="step"><div class="n">02</div><h3>Indicá el peso</h3><p>Sumá cantidades. Los mínimos a granel están pendientes.</p></div>
+        <div class="step"><div class="n">03</div><h3>Enviá el mensaje</h3><p>La maqueta prepara el texto; el local confirma stock y entrega.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="b2b">
+        <div>
+          <h2>¿Comprás para un comercio?</h2>
+          <p>El alta de comercios, las listas propias y el crédito son propuestas a definir. Estado: <span class="ph">{{account_approval_policy}}</span>. No se verificó un flujo de aprobación.</p>
+        </div>
+        <a class="btn yellow" href="A/contacto">Consultar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section class="page" id="page-catalogo" aria-labelledby="h-catalogo" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Catálogo de ejemplo</span>
+      <h1 id="h-catalogo" tabindex="-1">A granel</h1>
+      <p class="lead" style="margin:0">Seis familias anunciadas por el negocio, con fichas de ejemplo para validar estructura y estados.</p>
+      <p class="note" style="margin-top:7px">Precios simulados. Lista vigente: <span class="ph">{{price_visibility}}</span>.</p>
+    </div>
+
+    <div class="sim-states" role="group" aria-label="Simular estado de la lista">
+      <span>Simular:</span>
+      <button type="button" data-sim="normal" aria-pressed="true">Normal</button>
+      <button type="button" data-sim="loading" aria-pressed="false">Cargando</button>
+      <button type="button" data-sim="error" aria-pressed="false">Error</button>
+    </div>
+
+    <div class="catalog">
+      <aside class="filters" aria-label="Filtros">
+        <h2>Filtrar</h2>
+        <fieldset><legend>Familia</legend><div id="filter-families"></div></fieldset>
+        <fieldset><legend>Disponibilidad</legend>
+          <label><input type="checkbox" id="f-stock"> Solo disponibles</label>
+          <label><input type="checkbox" id="f-offer"> Solo ofertas (ejemplo)</label>
+        </fieldset>
+        <fieldset><legend>Ordenar</legend>
+          <select id="sort" aria-label="Ordenar resultados">
+            <option value="relevance">Relevancia</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre A–Z</option>
+          </select>
+        </fieldset>
+        <button type="button" class="btn line sm block" id="clear-filters">Limpiar</button>
+        <p class="note" style="margin:8px 0 0">Filtros y precios simulados.</p>
+      </aside>
+      <div>
+        <div class="toolbar"><div class="count" id="cat-count" aria-live="polite"></div></div>
+        <div class="chips" id="chips"></div>
+        <div class="prod-grid" id="cat-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTO -->
+<section class="page" id="page-producto" aria-labelledby="h-producto" hidden>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Ubicación"><a href="A/inicio">Inicio</a> / <a href="A/catalogo">Catálogo</a> / <span id="crumb-name">Producto</span></nav>
+    <div id="detail-root"></div>
+    <div class="section" id="related-wrap">
+      <div class="section-head"><h2>Misma familia</h2></div>
+      <div class="prod-grid" id="related"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COTIZACIÓN -->
+<section class="page" id="page-cotizacion" aria-labelledby="h-cotizacion" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Solicitud</span>
+      <h1 id="h-cotizacion" tabindex="-1">Tu consulta</h1>
+      <p class="lead" style="margin:0">Revisá cantidades y prepará el mensaje. No confirma stock, precio ni entrega.</p>
+    </div>
+    <div id="quote-root"></div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="page" id="page-contacto" aria-labelledby="h-contacto" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Datos publicados</span>
+      <h1 id="h-contacto" tabindex="-1">Contacto</h1>
+      <p class="lead" style="margin:0">Domicilio y contactos con su procedencia. El horario vigente no está confirmado.</p>
+      <p><span class="status-line">Validación pendiente</span></p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h2>Domicilio</h2>
+        <p><strong>Brasil 977</strong></p>
+        <p>Bahía Blanca, Buenos Aires, Argentina</p>
+        <p class="note">Corroborado en la descripción pública del negocio.</p>
+        <div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Brasil%20977%2C%20Bah%C3%ADa%20Blanca" target="_blank" rel="noopener">Abrir en Google Maps</a></div>
+      </div>
+      <div class="contact-card">
+        <h2>Contacto</h2>
+        <p><a href="tel:+5492915342363">+54 9 291 534-2363</a> <span class="note">· móvil publicado en Facebook</span></p>
+        <p><a href="mailto:alimentosagranel3b@gmail.com">alimentosagranel3b@gmail.com</a></p>
+        <p class="note">El teléfono histórico del CSV (+54 11 3626-8264) no está confirmado como contacto actual.</p>
+        <div class="links"><a href="https://www.facebook.com/p/Distribuidora-3B-100064159118978/" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/mayorista3b/" target="_blank" rel="noopener">Instagram</a></div>
+      </div>
+      <div class="contact-card">
+        <h2>Horarios</h2>
+        <p class="pending-box"><strong>Pendiente:</strong> <span class="ph">{{opening_hours}}</span></p>
+        <p class="note">Sin horario vigente de fuente propia confirmado. No se publica un horario estimado.</p>
+      </div>
+      <div class="contact-card">
+        <h2>Reputación de campaña</h2>
+        <p>4,6 ★ · 520 reseñas en Google</p>
+        <p class="note">Dato del CSV de campaña, no revalidado. No se usa como testimonio ni certificación.</p>
+        <p class="note">Venta mayorista y minorista anunciada; segmentación concreta pendiente.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Datos pendientes</h2></div>
+      <table class="conditions">
+        <caption class="sr-only">Estado de los datos comerciales</caption>
+        <tbody>
+          <tr><th>Razón social y CUIT</th><td><span class="ph">{{legal_name}}</span> · <span class="ph">{{tax_id}}</span></td></tr>
+          <tr><th>Precios y moneda</th><td><span class="ph">{{price_visibility}}</span> · <span class="ph">{{currency}}</span>. ARS solo como referencia de maqueta.</td></tr>
+          <tr><th>Mínimos y múltiplos</th><td><span class="ph">{{order_rules}}</span>. Venta a granel anunciada.</td></tr>
+          <tr><th>Alta de comercios</th><td><span class="ph">{{account_approval_policy}}</span></td></tr>
+          <tr><th>Envíos y cobertura</th><td>Envíos nacionales anunciados. Condiciones: <span class="ph">{{fulfillment_policy}}</span>.</td></tr>
+          <tr><th>Impuestos</th><td><span class="ph">{{tax_display_policy}}</span></td></tr>
+          <tr><th>Crédito y permisos</th><td><span class="ph">{{credit_policy}}</span> · <span class="ph">{{buyer_roles}}</span></td></tr>
+          <tr><th>Políticas comerciales</th><td><span class="ph">{{commercial_policies}}</span></td></tr>
+          <tr><th>Marca</th><td>Paleta muestreada del logo, no oficial. <span class="ph">{{tagline}}</span> · <span class="ph">{{brand_fonts}}</span>.</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:10px">Ocultar precios no es seguridad. Una lista protegida requiere autenticación y política definidas por el negocio.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="foot-brand">Distribuidora 3B</div>
+      <p>Alimentos a granel: condimentos, harinas, hierbas, frutos secos, legumbres y repostería.</p>
+      <p>Brasil 977, Bahía Blanca, Argentina</p>
+    </div>
+    <div>
+      <h2>Contacto</h2>
+      <ul>
+        <li><a href="tel:+5492915342363">+54 9 291 534-2363</a></li>
+        <li><a href="mailto:alimentosagranel3b@gmail.com">alimentosagranel3b@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/mayorista3b/" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Maqueta</h2>
+      <ul>
+        <li><a href="assets/3b/rubro-imagenes/CREDITOS.md">Créditos de imágenes</a></li>
+        <li><a href="A/contacto">Datos pendientes</a></li>
+      </ul>
+      <p class="note" style="color:AA3907A;margin-top:5px">Demo documental. Precios y productos simulados.</p>
+    </div>
+  </div>
+  <div class="wrap foot-bottom"><span>© 2026 · MAQUETA DE DEMOSTRACIÓN</span><span>FOTOS DE REFERENCIA DE RUBRO</span></div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const WA_NUMBER='5492915342363';
+const IMG='assets/3b/rubro-imagenes/';
+const PRODUCTS=[
+  {sku:'3B-801',name:'Ajo en polvo',family:'Condimentos',pres:'100 g',type:'Unidad',price:2400,stock:true,offer:true,img:'condimentos-especias.jpg',desc:'Ajo en polvo a granel para cocina y gastronomía. Molido y origen a confirmar. Producto de ejemplo.'},
+  {sku:'3B-802',name:'Harina 000',family:'Harinas',pres:'1 kg',type:'Unidad',price:1900,stock:true,offer:false,img:'harinas-harina.jpg',desc:'Harina 000 para panadería y cocina. Marca y molienda a confirmar.'},
+  {sku:'3B-803',name:'Orégano',family:'Hierbas',pres:'50 g',type:'Unidad',price:1800,stock:true,offer:false,img:'hierbas-oregano.jpg',desc:'Orégano seco a granel. Cosecha y envasado a confirmar.'},
+  {sku:'3B-804',name:'Almendras',family:'Frutos secos',pres:'500 g',type:'Unidad',price:8900,stock:true,offer:true,img:'frutos-almendras.jpg',desc:'Almendras para consumo o repostería. Origen y calibre a confirmar. La imagen es de referencia.'},
+  {sku:'3B-805',name:'Lentejas',family:'Legumbres',pres:'500 g',type:'Unidad',price:2600,stock:true,offer:false,img:'legumbres-lentejas.jpg',desc:'Lentejas secas a granel. Variedad y calibre a confirmar.'},
+  {sku:'3B-806',name:'Azúcar impalpable',family:'Repostería',pres:'500 g',type:'Unidad',price:3200,stock:true,offer:false,img:'reposteria-azucar.jpg',desc:'Azúcar impalpable para repostería. Presentación y origen a confirmar.'},
+  {sku:'3B-807',name:'Nueces',family:'Frutos secos',pres:'500 g',type:'Unidad',price:9800,stock:false,offer:false,img:'frutos-nueces.jpg',desc:'Nueces peladas para consumo o repostería. Se muestran agotadas para validar el estado de falta de stock.'}
+];
+const FAMILIES=['Condimentos','Harinas','Hierbas','Frutos secos','Legumbres','Repostería'];
+const state={q:'',families:new Set(),stockOnly:false,offerOnly:false,sort:'relevance',sim:'normal',cart:{},detailSku:null,detailQty:1,obs:'',delivery:'retiro',success:false};
+
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&A39;'}[c]));
+const money=n=>'$ '+n.toLocaleString('es-AR');
+const bySku=sku=>PRODUCTS.find(p=>p.sku===sku);
+const countUnits=()=>Object.values(state.cart).reduce((a,b)=>a+b,0);
+const familyCount=f=>PRODUCTS.filter(p=>p.family===f).length;
+
+function toast(msg){const t=$('Atoast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2800);}
+function updateBadge(){const n=countUnits();$('Abadge').textContent=n;$('.quote-link').setAttribute('aria-label','Ver consulta, '+n+' ítems');}
+
+function card(p){
+  return `<article class="prod">
+    <div class="media">
+      <a href="A/producto/${p.sku}" aria-label="Ver ${esc(p.name)}"><img src="${IMG}${p.img}" alt="${esc(p.name)} — imagen de referencia del rubro" loading="lazy" width="400" height="400"></a>
+      <span class="fam">${esc(p.family)}</span>${p.offer?'<span class="off">Oferta ejemplo</span>':''}
+    </div>
+    <div class="body">
+      <h3><a href="A/producto/${p.sku}">${esc(p.name)}</a></h3>
+      <span class="weight">${esc(p.pres)}</span>
+      <span class="price">${money(p.price)}<span class="sim">simulado</span></span>
+      <span class="avail ${p.stock?'':'out'}">${p.stock?'Disponible (ejemplo)':'Sin stock (ejemplo)'}</span>
+      <div class="actions"><button type="button" class="btn sm ${p.stock?'':'line'}" data-add="${p.sku}" ${p.stock?'':'disabled'}>${p.stock?'Sumar':'Sin stock'}</button></div>
+    </div>
+  </article>`;
+}
+const paint=(el,list)=>{el.innerHTML=list.map(card).join('');};
+function paintFamilies(){
+  $('Afilter-families').innerHTML=FAMILIES.map(f=>`<label><input type="checkbox" class="f-family" name="familia" value="${f}" ${state.families.has(f)?'checked':''}> ${f} <span class="muted" style="font-size:9.5px">(${familyCount(f)})</span></label>`).join('');
+}
+function renderHome(){
+  $('Ahome-cats').innerHTML=FAMILIES.map(f=>{
+    const img=PRODUCTS.find(p=>p.family===f).img;
+    return `<a class="cat-card" href="A/catalogo?familia=${encodeURIComponent(f)}" data-family="${f}">
+      <img src="${IMG}${img}" alt="" loading="lazy" width="200" height="200">
+      <div class="body"><h3>${f}</h3><span>${familyCount(f)} de ejemplo</span></div>
+    </a>`;
+  }).join('');
+  const featured=PRODUCTS.filter(p=>p.offer).concat(PRODUCTS.filter(p=>!p.offer&&p.stock));
+  paint($('Ahome-featured'),featured.slice(0,4));
+}
+function filtered(){
+  let list=PRODUCTS.slice();const q=state.q.trim().toLowerCase();
+  if(q)list=list.filter(p=>(p.name+' '+p.sku+' '+p.family+' '+p.pres).toLowerCase().includes(q));
+  if(state.families.size)list=list.filter(p=>state.families.has(p.family));
+  if(state.stockOnly)list=list.filter(p=>p.stock);
+  if(state.offerOnly)list=list.filter(p=>p.offer);
+  if(state.sort==='price-asc')list.sort((a,b)=>a.price-b.price);
+  if(state.sort==='price-desc')list.sort((a,b)=>b.price-a.price);
+  if(state.sort==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'es'));
+  return list;
+}
+function renderCatalog(){
+  const grid=$('Acat-grid'),list=filtered();
+  $('Acat-count').textContent=state.sim==='normal'?list.length+(list.length===1?' producto de ejemplo':' productos de ejemplo'):'';
+  const chips=[];
+  if(state.q)chips.push(`<span class="chip">“${esc(state.q)}” <button type="button" data-drop="q" aria-label="Quitar búsqueda">×</button></span>`);
+  state.families.forEach(f=>chips.push(`<span class="chip">${esc(f)} <button type="button" data-drop="family" data-value="${esc(f)}" aria-label="Quitar ${esc(f)}">×</button></span>`));
+  if(state.stockOnly)chips.push('<span class="chip">Disponibles <button type="button" data-drop="stock" aria-label="Quitar disponibilidad">×</button></span>');
+  if(state.offerOnly)chips.push('<span class="chip">Ofertas <button type="button" data-drop="offer" aria-label="Quitar ofertas">×</button></span>');
+  $('Achips').innerHTML=chips.join('');
+  if(state.sim==='loading'){grid.innerHTML=Array.from({length:4}).map(()=>'<div class="skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>').join('');return;}
+  if(state.sim==='error'){grid.innerHTML=`<div class="errorbox" role="alert"><h2>No pudimos cargar el catálogo</h2><p>Estado simulado para probar la recuperación. En producción vendría de la lista del negocio.</p><button type="button" class="btn" data-retry>Reintentar</button></div>`;return;}
+  if(!list.length){grid.innerHTML=`<div class="empty"><h2>Sin resultados</h2><p>Probá otro término o quitá filtros. La búsqueda incluye nombre, código, familia y peso.</p><button type="button" class="btn line" id="empty-clear">Limpiar filtros</button></div>`;return;}
+  paint(grid,list);
+}
+function clearFilters(){
+  state.q='';state.families.clear();state.stockOnly=false;state.offerOnly=false;state.sort='relevance';
+  $('Aq').value='';$('Af-stock').checked=false;$('Af-offer').checked=false;$('Asort').value='relevance';
+  paintFamilies();renderCatalog();
+}
+function renderDetail(){
+  const p=bySku(state.detailSku),root=$('Adetail-root');if(!p)return;
+  $('Acrumb-name').textContent=p.name;
+  root.innerHTML=`<div class="detail">
+    <figure class="detail-fig"><img src="${IMG}${p.img}" alt="${esc(p.name)} — imagen de referencia del rubro" width="700" height="700"><figcaption>Imagen de referencia de rubro. No es una foto del producto comercializado.</figcaption></figure>
+    <div>
+      <span class="kicker">${esc(p.family)} · ${esc(p.pres)}</span>
+      <h1 id="h-producto" tabindex="-1">${esc(p.name)}</h1>
+      <div class="sku">${p.sku} · código de maqueta</div>
+      <div class="price-box">
+        <div class="big">${money(p.price)}<span class="sim">simulado</span></div>
+        <p class="note">Precio de ejemplo (simulado) por ${esc(p.pres)}. Lista vigente: <span class="ph">{{price_visibility}}</span>.</p>
+      </div>
+      <p class="stock-line ${p.stock?'':'out'}">${p.stock?'Disponible en la maqueta · stock real a confirmar':'Sin stock (ejemplo) · consultá reposición'}</p>
+      <label class="qty-label" for="qty">Cantidad</label>
+      <div class="qty"><button type="button" data-step="-1" aria-label="Restar una unidad">−</button><input id="qty" type="number" min="1" step="1" value="${state.detailQty}" aria-describedby="qty-help"><button type="button" data-step="1" aria-label="Sumar una unidad">+</button></div>
+      <p class="note" id="qty-help" style="margin-top:5px">Mínimo y paso de la maqueta: 1 unidad. Reglas reales: <span class="ph">{{minimum_quantity}}</span> / <span class="ph">{{quantity_step}}</span>.</p>
+      <div class="add-row"><button type="button" class="btn" data-add-detail="${p.sku}" ${p.stock?'':'disabled'}>Sumar a la consulta</button><a class="btn line" href="A/cotizacion">Ver consulta</a></div>
+      <p class="inline-note" id="detail-note" role="status" aria-live="polite"></p>
+      <p style="font-size:13.5px">${esc(p.desc)}</p>
+      <table class="spec-table"><tbody>
+        <tr><th>Peso / presentación</th><td>${esc(p.pres)}</td></tr>
+        <tr><th>Venta</th><td>${esc(p.type)} · mayorista y minorista anunciados</td></tr>
+        <tr><th>Disponibilidad</th><td>${p.stock?'Disponible (ejemplo)':'Agotado (ejemplo)'}</td></tr>
+        <tr><th>Mínimo de compra</th><td><span class="ph">{{minimum_quantity}}</span></td></tr>
+        <tr><th>Paso de cantidad</th><td><span class="ph">{{quantity_step}}</span></td></tr>
+        <tr><th>Origen del catálogo</th><td><span class="ph">{{data_sources}}</span></td></tr>
+      </tbody></table>
+      <ul class="rules"><li>Pesos y precios de ejemplo.</li><li>La consulta no reserva mercadería.</li><li>Envíos nacionales anunciados; condiciones: <span class="ph">{{fulfillment_policy}}</span>.</li></ul>
+    </div>
+  </div>`;
+  const rel=PRODUCTS.filter(x=>x.family===p.family&&x.sku!==p.sku).slice(0,4);
+  $('Arelated').innerHTML=rel.length?rel.map(card).join(''):'<p class="note">Sin otros productos de ejemplo en esta familia.</p>';
+  $('Arelated-wrap').hidden=false;
+}
+function cartLines(){return Object.entries(state.cart).map(([sku,qty])=>({p:bySku(sku),qty})).filter(x=>x.p);}
+function renderQuote(){
+  const root=$('Aquote-root'),lines=cartLines();
+  if(!lines.length){root.innerHTML=`<div class="quote-empty"><h2>Tu consulta está vacía</h2><p>Sumá productos desde el catálogo para preparar un mensaje con códigos, pesos y cantidades. No se envía nada automáticamente.</p><a class="btn" href="A/catalogo">Ir al catálogo</a></div>`;return;}
+  const total=lines.reduce((a,l)=>a+l.p.price*l.qty,0);
+  root.innerHTML=`<div class="quote-wrap">
+    <div>
+      <div class="lines">${lines.map(({p,qty})=>`<div class="line">
+        <img src="${IMG}${p.img}" alt="" width="74" height="64">
+        <div><h3>${esc(p.name)}</h3><div class="meta">${p.sku} · ${esc(p.pres)}</div>
+          <div class="qty"><button type="button" data-line-step="-1" data-sku="${p.sku}" aria-label="Restar una unidad de ${esc(p.name)}">−</button><input type="number" min="1" step="1" value="${qty}" name="cantidad-${p.sku}" data-line-qty="${p.sku}" aria-label="Cantidad de ${esc(p.name)}"><button type="button" data-line-step="1" data-sku="${p.sku}" aria-label="Sumar una unidad de ${esc(p.name)}">+</button></div>
+        </div>
+        <div class="right"><span class="sub">${money(p.price*qty)}</span><button type="button" class="link-btn" data-remove="${p.sku}">Quitar</button></div>
+      </div>`).join('')}</div>
+      <div class="field"><label for="delivery">Entrega</label><select id="delivery"><option value="retiro" ${state.delivery==='retiro'?'selected':''}>Retiro en el local (a confirmar)</option><option value="envio" ${state.delivery==='envio'?'selected':''}>Envío nacional (a confirmar)</option></select></div>
+      <div class="field"><label for="obs">Observaciones</label><textarea id="obs" maxlength="400" placeholder="Ej.: consulto por peso mínimo y envío.">${esc(state.obs)}</textarea></div>
+      <p class="note">Importes de ejemplo. Impuestos: <span class="ph">{{tax_display_policy}}</span>. Envíos: <span class="ph">{{fulfillment_policy}}</span>.</p>
+    </div>
+    <aside class="summary" aria-label="Resumen">
+      <h2>Resumen</h2>
+      <div class="sum-row"><span>Ítems</span><strong>${countUnits()}</strong></div>
+      <div class="sum-row"><span>Subtotal (simulado)</span><strong>${money(total)}</strong></div>
+      <div class="sum-row"><span>Impuestos</span><strong>{{tax_display_policy}}</strong></div>
+      <div class="sum-row"><span>Envío</span><strong>A confirmar</strong></div>
+      <div class="sum-total"><span>Total estimado</span><span>${money(total)}</span></div>
+      <p class="note">No incluye impuestos, descuentos ni flete.</p>
+      <button type="button" class="btn block" id="prepare" ${state.success?'disabled':''}>${state.success?'Mensaje preparado':'Preparar WhatsApp'}</button>
+      <div id="success-slot">${state.success?'<div class="success" role="status"><strong>Solicitud preparada (no enviada)</strong>Se abrió WhatsApp con el detalle. El local confirma stock, precio y entrega.</div>':''}</div>
+      <p class="note">La maqueta no confirma el pedido.</p>
+    </aside>
+  </div>`;
+}
+function waMessage(){
+  const rows=cartLines().map(({p,qty})=>`• ${qty} × ${p.sku} · ${p.name} (${p.pres})`).join('\n');
+  const entrega=state.delivery==='retiro'?'Retiro en el local (a confirmar)':'Envío nacional (a confirmar)';
+  return `Hola Distribuidora 3B, quiero consultar por este pedido:\n${rows}\n\nEntrega: ${entrega}${state.obs.trim()?'\nObservaciones: '+state.obs.trim():''}\n\nEs una solicitud de la maqueta; queda sujeta a confirmación.`;
+}
+const PAGES=['inicio','catalogo','producto','cotizacion','contacto'];
+function route(){
+  const raw=location.hash.replace(/^A\/?/,'');const [path,query]=raw.split('?');const parts=path.split('/');
+  let page=parts[0]||'inicio';if(!PAGES.includes(page))page='inicio';
+  if(page==='catalogo'&&query){const params=new URLSearchParams(query);if(params.get('q')!==null){state.q=params.get('q');$('Aq').value=state.q;}if(params.get('familia'))state.families=new Set([params.get('familia')]);}
+  if(page==='producto'){const p=bySku(parts[1]);if(!p){location.hash='A/catalogo';return;}state.detailSku=p.sku;state.detailQty=1;renderDetail();}
+  $$('section.page').forEach(s=>s.hidden=s.id!=='page-'+page);
+  $$('[data-nav]').forEach(a=>{const on=a.dataset.nav===page||(page==='producto'&&a.dataset.nav==='catalogo');if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(page==='inicio')renderHome();
+  if(page==='catalogo'){paintFamilies();renderCatalog();}
+  if(page==='cotizacion')renderQuote();
+  const h=$('section.page:not([hidden]) h1');if(h)h.focus({preventScroll:true});
+  window.scrollTo({top:0,behavior:'auto'});
+}
+window.addEventListener('hashchange',route);
+function addToCart(sku,qty=1){state.cart[sku]=(state.cart[sku]||0)+qty;updateBadge();toast('Sumado a la consulta (demo) · '+bySku(sku).name);}
+function gotoCatalog(family){state.families=new Set([family]);location.hash='A/catalogo';if(location.hash==='A/catalogo')route();}
+
+$('Asearch-form').addEventListener('submit',e=>{e.preventDefault();state.q=$('Aq').value.trim();if(location.hash==='A/catalogo')renderCatalog();else location.hash='A/catalogo';});
+document.addEventListener('click',e=>{
+  const fam=e.target.closest('[data-family]');if(fam){e.preventDefault();gotoCatalog(fam.dataset.family);return;}
+  const add=e.target.closest('[data-add]');if(add){addToCart(add.dataset.add);return;}
+  const ad=e.target.closest('[data-add-detail]');if(ad){addToCart(ad.dataset.addDetail,state.detailQty);$('Adetail-note').textContent='Sumado a la consulta (demo).';return;}
+  const st=e.target.closest('[data-step]');if(st){const input=$('Aqty');let v=parseInt(input.value,10)||1;v=Math.max(1,Math.min(999,v+parseInt(st.dataset.step,10)));input.value=v;state.detailQty=v;return;}
+  const ls=e.target.closest('[data-line-step]');if(ls){const sku=ls.dataset.sku;state.cart[sku]=Math.max(1,Math.min(999,(state.cart[sku]||1)+parseInt(ls.dataset.lineStep,10)));updateBadge();renderQuote();return;}
+  const rm=e.target.closest('[data-remove]');if(rm){delete state.cart[rm.dataset.remove];state.success=false;updateBadge();renderQuote();toast('Producto quitado');return;}
+  const sim=e.target.closest('[data-sim]');if(sim){state.sim=sim.dataset.sim;$$('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',String(b===sim)));renderCatalog();return;}
+  if(e.target.closest('[data-retry]')){state.sim='normal';$$('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sim==='normal')));renderCatalog();return;}
+  if(e.target.closest('Aempty-clear')){clearFilters();return;}
+  const drop=e.target.closest('[data-drop]');if(drop){const k=drop.dataset.drop;if(k==='q'){state.q='';$('Aq').value='';}if(k==='family'){state.families.delete(drop.dataset.value);paintFamilies();}if(k==='stock'){state.stockOnly=false;$('Af-stock').checked=false;}if(k==='offer'){state.offerOnly=false;$('Af-offer').checked=false;}renderCatalog();return;}
+  if(e.target.closest('Aprepare')){
+    const btn=$('Aprepare');btn.disabled=true;btn.textContent='Preparando mensaje…';
+    setTimeout(()=>{state.success=true;window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(waMessage()),'_blank','noopener');renderQuote();const s=$('Asuccess-slot');if(s)s.scrollIntoView({block:'nearest'});},650);
+    return;
+  }
+});
+$('Aclear-filters').addEventListener('click',clearFilters);
+document.addEventListener('change',e=>{
+  if(e.target.classList.contains('f-family')){const v=e.target.value;if(e.target.checked)state.families.add(v);else state.families.delete(v);renderCatalog();}
+  if(e.target.id==='f-stock'){state.stockOnly=e.target.checked;renderCatalog();}
+  if(e.target.id==='f-offer'){state.offerOnly=e.target.checked;renderCatalog();}
+  if(e.target.id==='sort'){state.sort=e.target.value;renderCatalog();}
+  if(e.target.id==='delivery')state.delivery=e.target.value;
+  if(e.target.id==='obs')state.obs=e.target.value;
+  if(e.target.id==='qty'){let v=parseInt(e.target.value,10);if(isNaN(v)||v<1)v=1;if(v>999)v=999;e.target.value=v;state.detailQty=v;}
+  if(e.target.matches('[data-line-qty]')){const sku=e.target.dataset.lineQty;let v=parseInt(e.target.value,10);if(isNaN(v)||v<1)v=1;if(v>999)v=999;state.cart[sku]=v;updateBadge();renderQuote();}
+});
+paintFamilies();updateBadge();route();
+</script>
+</body>
+</html>
+

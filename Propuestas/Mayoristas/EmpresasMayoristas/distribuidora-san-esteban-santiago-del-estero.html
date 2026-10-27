@@ -1,0 +1,778 @@
+﻿<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distribuidora San Esteban · Demo de maqueta</title>
+<meta name="description" content="Maqueta de supermercado mayorista para Distribuidora San Esteban, Santiago del Estero. Datos pendientes y precios simulados.">
+<style>
+:root{
+  --red:#C21010; --red-dark:#8E0B0B; --red-soft:#FBE7E7;
+  --yellow:#FFE500; --yellow-soft:#FFF9BF;
+  --ink:#181818; --ink-2:#4C4C4C; --ink-3:#737373;
+  --paper:#FFFFFF; --off:#F5F4F0; --line:#E0DED7; --line-2:#C7C4BA;
+  --focus:#0B57D0;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --cond:"Arial Narrow","Segoe UI",system-ui,Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--off);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+img{display:block;max-width:100%;height:auto}
+a{color:var(--red-dark);text-underline-offset:3px}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-family:var(--cond);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;line-height:.98}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+h1[tabindex="-1"]:focus{outline:none}
+.skip{position:absolute;left:12px;top:-70px;z-index:99;background:var(--ink);color:#fff;padding:12px 18px}
+.skip:focus{top:12px}
+.wrap{max-width:1220px;margin:0 auto;padding:0 20px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.muted{color:var(--ink-2)}
+.note{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+.ph{font-family:var(--mono);font-size:.88em;background:#FFF5B8;border-bottom:1px dashed #A97900;padding:0 2px;white-space:nowrap}
+.sim{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border:1px solid currentColor;padding:1px 5px;vertical-align:3px;margin-left:5px}
+
+/* Aviso */
+.notice{background:var(--ink);color:#EFEFEA;font-size:12px}
+.notice .wrap{display:flex;justify-content:center;gap:8px 18px;flex-wrap:wrap;padding:9px 20px;text-align:center}
+.notice b{color:var(--yellow)}
+
+/* Cabecera */
+.site-head{background:#fff;position:sticky;top:0;z-index:30;box-shadow:0 1px 0 var(--line)}
+.topbar{background:var(--red);color:#fff;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}
+.topbar .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:7px 20px}
+.head{display:flex;align-items:center;gap:16px 22px;min-height:82px;flex-wrap:wrap;padding:9px 0}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none}
+.brand img{width:52px;height:52px;border-radius:4px;border:1px solid var(--line)}
+.brand-name{display:flex;flex-direction:column;line-height:1.05}
+.brand-name strong{font-family:var(--cond);font-size:24px;text-transform:uppercase;letter-spacing:-.01em}
+.brand-name small{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:3px}
+.nav{display:flex;gap:18px;margin-left:6px}
+.nav a{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:10px 0;border-bottom:3px solid transparent}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--red);border-bottom-color:var(--red)}
+.search{display:flex;flex:1 1 220px;max-width:320px;margin-left:auto;min-width:190px}
+.search input{flex:1;min-width:0;height:42px;border:1px solid var(--line-2);border-right:0;padding:0 13px;font-size:14px;background:var(--off)}
+.search button{width:46px;height:42px;border:1px solid var(--line-2);border-left:0;background:var(--yellow);color:var(--ink);font-size:16px;cursor:pointer}
+.search button:hover{background:#FFC400}
+.quote-link{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 14px;background:var(--red);color:#fff;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.quote-link:hover{background:var(--red-dark)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:21px;height:21px;background:var(--yellow);color:var(--ink);font-size:11px;font-weight:800;padding:0 5px}
+
+/* Páginas */
+.page{padding:0 0 68px}
+.page[hidden]{display:none}
+.kicker{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;background:var(--red);color:#fff;padding:5px 10px;margin-bottom:14px}
+.lead{font-size:17px;color:var(--ink-2);max-width:64ch}
+.section{margin-top:52px}
+.section-head{background:var(--red);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 14px;margin-bottom:20px}
+.section-head h2{font-size:clamp(22px,2.8vw,30px);color:#fff}
+.section-head a{color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;background:var(--red);color:#fff;border:2px solid var(--red);font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;border-radius:3px}
+.btn:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn.line{background:#fff;color:var(--red)}
+.btn.line:hover{background:var(--red-soft)}
+.btn.yellow{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.btn.yellow:hover{background:#FFC400;border-color:#FFC400}
+.btn.sm{min-height:38px;padding:0 13px;font-size:11.5px}
+.btn.block{width:100%}
+.btn[disabled]{background:#E7E4DC;border-color:#E7E4DC;color:#7C786E;cursor:not-allowed}
+
+/* Inicio */
+.hero{display:grid;grid-template-columns:1.02fr .98fr;gap:36px;align-items:stretch;margin-top:34px}
+.hero-copy{background:#fff;border:1px solid var(--line);border-top:8px solid var(--red);padding:30px 30px 26px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:clamp(40px,5.6vw,68px);margin-bottom:12px}
+.hero h1 span{color:var(--red)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 10px}
+.hero-fig{margin:0;position:relative;min-height:340px}
+.hero-fig img{width:100%;height:100%;object-fit:cover;border:1px solid var(--line)}
+.ribbon{position:absolute;left:0;top:18px;background:var(--yellow);color:var(--ink);font-family:var(--cond);font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding:7px 14px 7px 12px;box-shadow:3px 3px 0 rgba(0,0,0,.18)}
+.hero-credit{position:absolute;right:6px;bottom:4px;font-size:9.5px;color:#fff;background:rgba(0,0,0,.55);padding:2px 5px}
+.tags-row{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:#fff;margin-top:16px}
+.tagcell{padding:13px 15px;border-right:1px solid var(--line)}
+.tagcell:last-child{border-right:0}
+.tagcell b{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:2px}
+.tagcell strong{display:block;font-size:14.5px;line-height:1.25}
+.tagcell span{font-size:12px;color:var(--ink-2)}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cat-card{background:#fff;border:1px solid var(--line);text-align:left;padding:0;cursor:pointer;display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.cat-card:hover{border-color:var(--red)}
+.cat-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.cat-card .body{padding:10px 12px 12px}
+.cat-card h3{font-size:20px;margin-bottom:2px}
+.cat-card span{font-size:11.5px;color:var(--ink-2)}
+.cat-card .n{display:inline-block;background:var(--yellow);font-size:10px;font-weight:800;padding:2px 7px;margin-bottom:5px}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(218px,1fr));gap:14px}
+.prod{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
+.prod:hover{border-color:var(--line-2);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.prod .media{position:relative;background:#fff;border-bottom:1px solid var(--line)}
+.prod .media img{width:100%;aspect-ratio:1/1;object-fit:contain;padding:10px}
+.prod .fam{position:absolute;left:0;top:0;background:var(--ink);color:#fff;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 7px}
+.prod .off{position:absolute;right:0;top:0;background:var(--yellow);color:var(--ink);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 7px}
+.prod .body{padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px;flex:1}
+.prod h3{font-family:var(--sans);font-size:14.5px;font-weight:700;text-transform:none;letter-spacing:0;line-height:1.3}
+.prod h3 a{color:var(--ink);text-decoration:none}
+.prod h3 a:hover{text-decoration:underline}
+.prod .pres{font-size:11.5px;color:var(--ink-3)}
+.price-tag{display:inline-flex;align-items:baseline;gap:4px;background:var(--yellow);color:var(--ink);align-self:flex-start;padding:3px 10px 3px 8px;font-weight:800;font-size:19px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;clip-path:polygon(0 0,100% 0,100% 100%,8px 100%,0 calc(100% - 8px))}
+.price-tag .cur{font-size:12px;font-weight:700}
+.prod .avail{font-size:11px;color:#2C6B45}
+.prod .avail.out{color:var(--red);font-weight:700}
+.prod .actions{margin-top:auto;padding-top:8px}
+.prod .actions .btn{width:100%}
+.promo{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;background:#fff;border:2px dashed var(--red);padding:22px 26px}
+.promo h2{font-size:clamp(24px,3.4vw,34px);color:var(--red);margin-bottom:5px}
+.promo p{font-size:13.5px;margin:0;max-width:62ch;color:var(--ink-2)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{background:#fff;border:1px solid var(--line);padding:16px 18px;border-left:5px solid var(--yellow)}
+.step .n{font-family:var(--cond);font-size:28px;color:var(--red);line-height:1}
+.step h3{font-size:18px;margin:5px 0 3px}
+.step p{font-size:12.5px;color:var(--ink-2);margin:0}
+.b2b{background:var(--red);color:#fff;padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+.b2b h2{color:#fff;font-size:clamp(22px,3vw,32px);margin-bottom:5px}
+.b2b p{color:#FFDADA;font-size:13px;margin:0;max-width:62ch}
+.b2b .btn{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.b2b .btn:hover{background:#FFC400;border-color:#FFC400}
+
+/* Catálogo */
+.page-head{padding:30px 0 18px;border-bottom:1px solid var(--line)}
+.page-head h1{font-size:clamp(34px,4.4vw,52px);margin:6px 0}
+.sim-states{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;margin:16px 0 20px}
+.sim-states span{color:var(--ink-3);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sim-states button{background:#fff;border:1px solid var(--line-2);padding:4px 10px;font-size:11px;cursor:pointer;min-height:30px}
+.sim-states button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.catalog{display:grid;grid-template-columns:232px 1fr;gap:26px;align-items:start}
+.filters{background:#fff;border:1px solid var(--line);padding:15px;position:sticky;top:112px}
+.filters h2{font-size:11px;letter-spacing:.13em;text-transform:uppercase;background:var(--ink);color:#fff;padding:6px 8px;margin:-15px -15px 12px}
+.filters fieldset{border:0;padding:0;margin:0 0 13px}
+.filters legend{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.filters label{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0;cursor:pointer}
+.filters input[type=checkbox]{width:16px;height:16px;accent-color:var(--red)}
+.filters select{width:100%;height:34px;border:1px solid var(--line-2);background:#fff;padding:0 6px;font-size:12.5px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.count{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--yellow-soft);border:1px solid #E6D56A;padding:2px 3px 2px 8px}
+.chip button{width:20px;height:20px;border:1px solid #E6D56A;background:#fff;cursor:pointer;line-height:1;font-size:11px}
+.empty,.errorbox{grid-column:1/-1;background:#fff;border:2px dashed var(--line-2);padding:42px 22px;text-align:center}
+.empty h2,.errorbox h2{font-size:28px;margin-bottom:7px}
+.empty p,.errorbox p{font-size:13.5px;color:var(--ink-2);max-width:48ch;margin:0 auto 14px}
+.errorbox{border-color:var(--red);background:#FFF5F5}
+.skeleton{background:#fff;border:1px solid var(--line)}
+.skeleton .sk-img{aspect-ratio:1/1;background:linear-gradient(100deg,#EDEBE4 30%,#F8F7F3 50%,#EDEBE4 70%);background-size:200% 100%;animation:sk 1.2s linear infinite}
+.skeleton .sk-line{height:10px;margin:12px 12px 6px;background:#EDEBE4}
+.skeleton .sk-line.short{width:55%;margin-bottom:14px}
+@keyframes sk{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.skeleton .sk-img{animation:none}}
+
+/* Detalle */
+.crumbs{font-size:12px;color:var(--ink-3);margin:24px 0 16px}
+.crumbs a{color:var(--ink-3)}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:start}
+.detail-fig{margin:0;position:sticky;top:112px;background:#fff;border:1px solid var(--line);padding:14px}
+.detail-fig img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.detail-fig figcaption{font-size:10px;color:var(--ink-3);margin-top:6px}
+.detail h1{font-size:clamp(32px,4.2vw,48px);margin:8px 0 5px}
+.sku{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.price-box{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;margin:18px 0}
+.price-box .big{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.stock-line{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#2C6B45;margin:0 0 13px}
+.stock-line.out{color:var(--red)}
+.qty-label{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.qty{display:flex}
+.qty button{width:42px;height:44px;border:1px solid var(--line-2);background:#fff;cursor:pointer;font-size:19px;line-height:1}
+.qty button:first-child{border-right:0}
+.qty button:last-child{border-left:0}
+.qty input{width:60px;height:44px;border:1px solid var(--line-2);border-left:0;border-right:0;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+.add-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.inline-note{font-size:12.5px;color:var(--red);min-height:18px;margin-top:6px;font-weight:600}
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:18px}
+.spec-table th,.spec-table td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.spec-table th{width:44%;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+.rules{margin:13px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink-2)}
+.rules li{margin-bottom:4px}
+
+/* Cotización */
+.quote-wrap{display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:start;margin-top:20px}
+.lines{background:#fff;border:1px solid var(--line)}
+.line{display:grid;grid-template-columns:76px 1fr auto;gap:12px;padding:12px;border-bottom:1px solid var(--line);align-items:center}
+.line:last-child{border-bottom:0}
+.line img{width:76px;height:66px;object-fit:contain}
+.line h3{font-family:var(--sans);font-size:14px;font-weight:700;text-transform:none;line-height:1.3}
+.line .meta{font-size:11px;color:var(--ink-3)}
+.line .qty{margin-top:6px}
+.line .qty button{width:29px;height:29px;font-size:14px}
+.line .qty input{width:43px;height:29px;font-size:12.5px}
+.line .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.line .sub{font-weight:800;font-variant-numeric:tabular-nums}
+.link-btn{background:none;border:0;padding:2px;font-size:11px;color:var(--red);text-decoration:underline;cursor:pointer;min-height:24px}
+.summary{background:#fff;border:1px solid var(--line);border-top:6px solid var(--red);padding:16px;position:sticky;top:112px}
+.summary h2{font-size:24px;margin-bottom:9px}
+.sum-row{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:6px 0;color:var(--ink-2);border-bottom:1px dotted var(--line)}
+.sum-row strong{color:var(--ink);font-variant-numeric:tabular-nums}
+.sum-total{display:flex;justify-content:space-between;gap:10px;padding-top:9px;font-weight:800;font-size:16px}
+.summary .btn{margin-top:11px}
+.field{margin-top:13px}
+.field label{display:block;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.field textarea,.field select{width:100%;border:1px solid var(--line-2);padding:8px;font-size:13px;background:#fff}
+.field textarea{min-height:72px;resize:vertical}
+.success{background:#EDF6EF;border:1px solid #B9D6C4;padding:10px 12px;margin-top:9px;font-size:12px;color:#204D34}
+.success strong{display:block;margin-bottom:2px}
+.quote-empty{background:#fff;border:2px dashed var(--line-2);padding:46px 22px;text-align:center;margin-top:20px}
+.quote-empty h2{font-size:28px;margin-bottom:7px}
+.quote-empty p{font-size:13.5px;color:var(--ink-2);max-width:48ch;margin:0 auto 14px}
+
+/* Contacto */
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+.contact-card{background:#fff;border:1px solid var(--line);padding:18px 19px}
+.contact-card h2{font-size:20px;color:var(--red);margin-bottom:7px}
+.contact-card p{font-size:14px;margin:0 0 5px}
+.contact-card .links{display:flex;gap:13px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;font-weight:700}
+.conditions{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.conditions th,.conditions td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.conditions th{width:32%;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.status-line{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+.status-line::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+
+/* Pie */
+footer{background:var(--ink);color:#D8D8D3}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:26px;padding:32px 0 22px}
+footer h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9E9E98;margin-bottom:8px}
+footer p,footer li{font-size:12.5px;margin:0 0 4px}
+footer ul{list-style:none;padding:0;margin:0}
+footer a{color:#fff}
+.foot-brand{font-family:var(--cond);font-size:26px;text-transform:uppercase;color:#fff;line-height:1;margin-bottom:6px}
+.foot-bottom{border-top:1px solid #383834;padding:12px 0 22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:11px;color:#9E9E98}
+.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,130%);background:var(--red);color:#fff;padding:11px 16px;font-size:13px;font-weight:700;z-index:80;transition:transform .2s;max-width:calc(100vw - 28px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}html{scroll-behavior:auto}}
+
+/* Responsive */
+@media (max-width:1024px){
+  .hero{grid-template-columns:1fr}
+  .hero-fig img{aspect-ratio:16/9}
+  .cat-grid{grid-template-columns:1fr 1fr}
+  .detail{grid-template-columns:1fr;gap:22px}
+  .detail-fig{position:static;max-width:520px}
+  .catalog{grid-template-columns:1fr}
+  .filters{position:static}
+  .quote-wrap{grid-template-columns:1fr}
+  .summary{position:static}
+}
+@media (max-width:820px){
+  .head{display:grid;grid-template-columns:1fr auto;gap:7px 10px;padding:9px 0;min-height:auto}
+  .brand{grid-column:1;grid-row:1}
+  .quote-link{grid-column:2;grid-row:1;justify-self:end}
+  .search{grid-column:1/-1;grid-row:2;max-width:none;width:100%;margin-left:0;min-width:0;flex:none}
+  .nav{grid-column:1/-1;grid-row:3;margin:0;gap:14px;overflow-x:auto;border-top:1px solid var(--line);padding-top:2px}
+  .nav a{padding:6px 0;font-size:11px;white-space:nowrap}
+  .brand-name small{display:none}
+  .hero-copy{padding:22px 20px}
+  .tags-row{grid-template-columns:1fr}
+  .tagcell{border-right:0;border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:1fr}
+  .b2b,.promo{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .section{margin-top:38px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .cat-grid{grid-template-columns:1fr 1fr}
+  .prod-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .prod .body{padding:9px 10px 11px}
+  .prod h3{font-size:12.5px}
+  .price-tag{font-size:16px;padding:2px 8px 2px 6px}
+  .line{grid-template-columns:56px 1fr;gap:8px}
+  .line img{width:56px;height:56px}
+  .line .right{grid-column:1/-1;flex-direction:row;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+  .foot{grid-template-columns:1fr}
+  .topbar .wrap{justify-content:center;text-align:center}
+}
+@media (max-width:380px){.prod-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<div class="notice">
+  <div class="wrap">
+    <span><b>Demo de maqueta.</b> Precios y productos de ejemplo (simulados).</span>
+    <span>Fotos de referencia de rubro, no del local.</span>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="topbar">
+    <div class="wrap"><span>Supermercado mayorista · Santiago del Estero</span><span>Datos publicados, pendientes de validación</span></div>
+  </div>
+  <div class="wrap head">
+    <a class="brand" href="#/inicio" aria-label="Distribuidora San Esteban, ir al inicio">
+      <img src="assets/sanesteban/logo-referencia.png" alt="" width="52" height="52">
+      <span class="brand-name"><strong>San Esteban</strong><small>Distribuidora · supermercado mayorista</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#/inicio" data-nav="inicio">Inicio</a>
+      <a href="#/catalogo" data-nav="catalogo">Catálogo</a>
+      <a href="#/contacto" data-nav="contacto">Contacto</a>
+    </nav>
+    <form class="search" role="search" id="search-form">
+      <label class="sr-only" for="q">Buscar productos por nombre o código</label>
+      <input id="q" type="search" placeholder="Buscar producto…" autocomplete="off">
+      <button type="submit" aria-label="Buscar">⌕</button>
+    </form>
+    <a class="quote-link" href="#/cotizacion" aria-label="Ver consulta, 0 ítems">Consulta <span class="badge" id="badge">0</span></a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- INICIO -->
+<section class="page" id="page-inicio" aria-labelledby="h-inicio">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="kicker">Consumo masivo · ejemplo</span>
+        <h1 id="h-inicio" tabindex="-1">Tu supermercado <span>mayorista</span>.</h1>
+        <p class="lead">Almacén, bebidas, limpieza y perfumería para surtir tu comercio. Este catálogo es una maqueta con precios de ejemplo: la lista vigente, los mínimos y la cobertura deben confirmarse.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#/catalogo">Consultar productos</a>
+          <a class="btn line" href="#/contacto">Contacto</a>
+        </div>
+        <p class="note">«Consultar productos» es una propuesta de diseño ({{primary_cta}} pendiente).</p>
+      </div>
+      <div>
+        <figure class="hero-fig">
+          <img src="assets/sanesteban/rubro-imagenes/portada-supermercado.jpg" alt="Góndolas de supermercado con cereales, imagen de referencia del rubro" width="1200" height="900">
+          <span class="ribbon">Consumo masivo</span>
+          <span class="hero-credit">Foto de referencia · <a href="assets/sanesteban/rubro-imagenes/CREDITOS.md" style="color:#fff">créditos</a></span>
+        </figure>
+      </div>
+    </div>
+
+    <div class="tags-row">
+      <div class="tagcell"><b>Domicilio</b><strong>Av. Solís Oeste 1085</strong><span>Santiago del Estero. Otra ficha indica 1130: discrepancia sin resolver.</span></div>
+      <div class="tagcell"><b>Teléfono</b><strong>+54 385 418-1036</strong><span>Coincide entre CSV y Facebook. No se confirmó WhatsApp activo.</span></div>
+      <div class="tagcell"><b>Horario</b><strong><span class="ph">{{opening_hours}}</span></strong><span>No se consolidó un horario vigente a partir de avisos especiales.</span></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Familias de ejemplo</h2>
+        <a href="#/catalogo">Ver todo →</a>
+      </div>
+      <div class="cat-grid" id="home-cats"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Precios de ejemplo</h2>
+        <a href="#/catalogo">Ver todos →</a>
+      </div>
+      <div class="prod-grid" id="home-featured"></div>
+      <p class="note" style="margin-top:10px">Precios de ejemplo (simulados). No representan la lista vigente ni una oferta del negocio.</p>
+    </div>
+
+    <div class="section">
+      <div class="promo">
+        <div>
+          <h2>Ofertas de la semana (ejemplo)</h2>
+          <p>Bloque de ejemplo para mostrar cómo se vería una campaña. La vigencia, los precios y las condiciones reales no están confirmados.</p>
+        </div>
+        <a class="btn" href="#/catalogo?oferta=1">Ver ofertas de ejemplo</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Cómo consultar</h2></div>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><h3>Elegí productos</h3><p>Buscá por nombre o código y filtrá por familia.</p></div>
+        <div class="step"><div class="n">02</div><h3>Armá tu consulta</h3><p>Sumá cantidades. Mínimos y bultos están pendientes.</p></div>
+        <div class="step"><div class="n">03</div><h3>Enviá el mensaje</h3><p>La maqueta prepara el texto; el local confirma stock y entrega.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="b2b">
+        <div>
+          <h2>¿Comprás para un comercio?</h2>
+          <p>El alta de comercios y una lista propia son propuestas a definir. Estado: <span class="ph">{{account_approval_policy}}</span>. No se verificó un flujo de aprobación.</p>
+        </div>
+        <a class="btn" href="#/contacto">Ver condiciones</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section class="page" id="page-catalogo" aria-labelledby="h-catalogo" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Catálogo de ejemplo</span>
+      <h1 id="h-catalogo" tabindex="-1">Consumo masivo</h1>
+      <p class="lead" style="margin:0">Almacén, bebidas, limpieza y perfumería. Estructura y estados para validar con el negocio.</p>
+      <p class="note" style="margin-top:8px">Precios simulados. Lista vigente: <span class="ph">{{price_visibility}}</span>.</p>
+    </div>
+
+    <div class="sim-states" role="group" aria-label="Simular estado de la lista">
+      <span>Simular:</span>
+      <button type="button" data-sim="normal" aria-pressed="true">Normal</button>
+      <button type="button" data-sim="loading" aria-pressed="false">Cargando</button>
+      <button type="button" data-sim="error" aria-pressed="false">Error</button>
+    </div>
+
+    <div class="catalog">
+      <aside class="filters" aria-label="Filtros">
+        <h2>Filtrar</h2>
+        <fieldset><legend>Familia</legend><div id="filter-families"></div></fieldset>
+        <fieldset><legend>Disponibilidad</legend>
+          <label><input type="checkbox" id="f-stock"> Solo disponibles</label>
+          <label><input type="checkbox" id="f-offer"> Solo ofertas (ejemplo)</label>
+        </fieldset>
+        <fieldset><legend>Ordenar</legend>
+          <select id="sort" aria-label="Ordenar resultados">
+            <option value="relevance">Relevancia</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre A–Z</option>
+          </select>
+        </fieldset>
+        <button type="button" class="btn line sm block" id="clear-filters">Limpiar filtros</button>
+        <p class="note" style="margin:9px 0 0">Filtros y precios simulados.</p>
+      </aside>
+      <div>
+        <div class="toolbar"><div class="count" id="cat-count" aria-live="polite"></div></div>
+        <div class="chips" id="chips"></div>
+        <div class="prod-grid" id="cat-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTO -->
+<section class="page" id="page-producto" aria-labelledby="h-producto" hidden>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Ubicación"><a href="#/inicio">Inicio</a> / <a href="#/catalogo">Catálogo</a> / <span id="crumb-name">Producto</span></nav>
+    <div id="detail-root"></div>
+    <div class="section" id="related-wrap">
+      <div class="section-head"><h2>Misma familia</h2></div>
+      <div class="prod-grid" id="related"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COTIZACIÓN -->
+<section class="page" id="page-cotizacion" aria-labelledby="h-cotizacion" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Solicitud</span>
+      <h1 id="h-cotizacion" tabindex="-1">Tu consulta</h1>
+      <p class="lead" style="margin:0">Revisá cantidades y prepará el mensaje. No confirma stock, precio ni entrega.</p>
+    </div>
+    <div id="quote-root"></div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="page" id="page-contacto" aria-labelledby="h-contacto" hidden>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="kicker">Datos publicados</span>
+      <h1 id="h-contacto" tabindex="-1">Contacto</h1>
+      <p class="lead" style="margin:0">Canales y domicilio con su procedencia. El horario vigente no está consolidado.</p>
+      <p><span class="status-line">Validación pendiente</span></p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h2>Domicilio</h2>
+        <p><strong>Av. Solís Oeste 1085</strong></p>
+        <p>Santiago del Estero, Argentina</p>
+        <p class="note">Publicación propia y mapa de un proveedor. Otra ficha indica 1130: confirmar si es sucursal o referencia desactualizada. No se publica mapa definitivo.</p>
+      </div>
+      <div class="contact-card">
+        <h2>Teléfono</h2>
+        <p><a href="tel:+543854181036">+54 385 418-1036</a></p>
+        <p class="note">Coincide entre el CSV de campaña y Facebook. No se confirmó WhatsApp activo. El Linktree no pudo recuperarse.</p>
+        <div class="links"><a href="https://www.facebook.com/SanEstebanSrl/" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/distribuidorasanesteban/" target="_blank" rel="noopener">Instagram</a></div>
+      </div>
+      <div class="contact-card">
+        <h2>Horarios</h2>
+        <p><strong>Pendiente:</strong> <span class="ph">{{opening_hours}}</span></p>
+        <p class="note">No se consolidó un horario vigente a partir de avisos especiales. No se publica un horario estimado.</p>
+      </div>
+      <div class="contact-card">
+        <h2>Reputación de campaña</h2>
+        <p>4,3 ★ · 489 reseñas en Google</p>
+        <p class="note">Dato del CSV de campaña, no revalidado. No se usa como testimonio ni certificación.</p>
+        <p class="note">La descripción propia indica «supermercado mayorista».</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>Datos pendientes</h2></div>
+      <table class="conditions">
+        <caption class="sr-only">Estado de los datos comerciales</caption>
+        <tbody>
+          <tr><th>Razón social y CUIT</th><td><span class="ph">{{legal_name}}</span> · <span class="ph">{{tax_id}}</span></td></tr>
+          <tr><th>Precios y moneda</th><td><span class="ph">{{price_visibility}}</span> · <span class="ph">{{currency}}</span>. ARS solo como referencia de maqueta.</td></tr>
+          <tr><th>Mínimos y bultos</th><td><span class="ph">{{order_rules}}</span></td></tr>
+          <tr><th>Alta de comercios</th><td><span class="ph">{{account_approval_policy}}</span></td></tr>
+          <tr><th>Entrega y cobertura</th><td><span class="ph">{{service_area}}</span> · <span class="ph">{{fulfillment_policy}}</span></td></tr>
+          <tr><th>Impuestos</th><td><span class="ph">{{tax_display_policy}}</span></td></tr>
+          <tr><th>Crédito y permisos</th><td><span class="ph">{{credit_policy}}</span> · <span class="ph">{{buyer_roles}}</span></td></tr>
+          <tr><th>Políticas comerciales</th><td><span class="ph">{{commercial_policies}}</span></td></tr>
+          <tr><th>Marca</th><td>Paleta muestreada del logo, no oficial. <span class="ph">{{tagline}}</span> · <span class="ph">{{brand_fonts}}</span>.</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:11px">Ocultar precios en la interfaz no es una medida de seguridad. Una lista protegida requiere autenticación y política definidas por el negocio.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="foot-brand">Distribuidora San Esteban</div>
+      <p>Supermercado mayorista de consumo masivo.</p>
+      <p>Av. Solís Oeste 1085, Santiago del Estero, Argentina</p>
+    </div>
+    <div>
+      <h2>Contacto</h2>
+      <ul>
+        <li><a href="tel:+543854181036">+54 385 418-1036</a></li>
+        <li><a href="https://www.facebook.com/SanEstebanSrl/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.instagram.com/distribuidorasanesteban/" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Maqueta</h2>
+      <ul>
+        <li><a href="assets/sanesteban/rubro-imagenes/CREDITOS.md">Créditos de imágenes</a></li>
+        <li><a href="#/contacto">Datos pendientes</a></li>
+      </ul>
+      <p class="note" style="color:#9E9E98;margin-top:6px">Demo documental. Precios y productos simulados.</p>
+    </div>
+  </div>
+  <div class="wrap foot-bottom"><span>© 2026 · Maqueta de demostración</span><span>Fotos de referencia de rubro, no del negocio.</span></div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const WA_NUMBER='5493854181036';
+const IMG='assets/sanesteban/rubro-imagenes/';
+const PRODUCTS=[
+  {sku:'NSE-401',name:'Aceite de girasol 1,5 L',family:'Almacén',pres:'Botella 1,5 L',type:'Unidad',price:2450,stock:true,offer:true,img:'almacen-aceite.jpg',desc:'Aceite de girasol refinado. Marca y presentación exacta a confirmar con la lista vigente. Producto de ejemplo.'},
+  {sku:'NSE-402',name:'Leche entera 1 L',family:'Almacén',pres:'Envase 1 L',type:'Unidad',price:1350,stock:true,offer:false,img:'almacen-leche.jpg',desc:'Leche entera de larga vida. Marca y tipo a confirmar. La imagen es de referencia, no del producto comercializado.'},
+  {sku:'NSE-403',name:'Gaseosa cola 3 L',family:'Bebidas',pres:'Botella 3 L',type:'Unidad',price:2890,stock:false,offer:false,img:'bebidas-gaseosa.jpg',desc:'Gaseosa cola en botella familiar. Se muestra agotada para validar el estado de falta de stock.'},
+  {sku:'NSE-404',name:'Lavandina 1 L',family:'Limpieza',pres:'Botella 1 L',type:'Unidad',price:990,stock:true,offer:true,img:'limpieza-lavandina.jpg',desc:'Lavandina para limpieza general. Concentración y marca a confirmar.'},
+  {sku:'NSE-405',name:'Detergente 750 ml',family:'Limpieza',pres:'Botella 750 ml',type:'Unidad',price:2190,stock:true,offer:false,img:'limpieza-detergente.jpg',desc:'Detergente líquido para vajilla. Aroma y marca a confirmar.'},
+  {sku:'NSE-406',name:'Shampoo 400 ml',family:'Perfumería',pres:'Frasco 400 ml',type:'Unidad',price:3290,stock:true,offer:false,img:'perfumeria-shampoo.jpg',desc:'Shampoo de uso diario. Línea y variedades a confirmar. Imagen de referencia.'},
+  {sku:'NSE-407',name:'Café instantáneo 170 g',family:'Almacén',pres:'Frasco 170 g',type:'Unidad',price:5990,stock:true,offer:true,img:'almacen-cafe.jpg',desc:'Café instantáneo en frasco. Marca y variedad a confirmar.'}
+];
+const FAMILIES=['Almacén','Bebidas','Limpieza','Perfumería'];
+const state={q:'',families:new Set(),stockOnly:false,offerOnly:false,sort:'relevance',sim:'normal',cart:{},detailSku:null,detailQty:1,obs:'',delivery:'retiro',success:false};
+
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$ '+n.toLocaleString('es-AR');
+const bySku=sku=>PRODUCTS.find(p=>p.sku===sku);
+const countUnits=()=>Object.values(state.cart).reduce((a,b)=>a+b,0);
+const familyCount=f=>PRODUCTS.filter(p=>p.family===f).length;
+
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2800);}
+function updateBadge(){const n=countUnits();$('#badge').textContent=n;$('.quote-link').setAttribute('aria-label','Ver consulta, '+n+' ítems');}
+
+function card(p){
+  return `<article class="prod">
+    <div class="media">
+      <a href="#/producto/${p.sku}" aria-label="Ver ${esc(p.name)}"><img src="${IMG}${p.img}" alt="${esc(p.name)} — imagen de referencia del rubro" loading="lazy" width="400" height="400"></a>
+      <span class="fam">${esc(p.family)}</span>${p.offer?'<span class="off">Oferta ejemplo</span>':''}
+    </div>
+    <div class="body">
+      <h3><a href="#/producto/${p.sku}">${esc(p.name)}</a></h3>
+      <span class="pres">${esc(p.pres)}</span>
+      <span class="price-tag"><span class="cur">$</span>${p.price.toLocaleString('es-AR')}<span class="sim">simulado</span></span>
+      <span class="avail ${p.stock?'':'out'}">${p.stock?'Disponible (ejemplo)':'Sin stock (ejemplo)'}</span>
+      <div class="actions"><button type="button" class="btn sm ${p.stock?'':'line'}" data-add="${p.sku}" ${p.stock?'':'disabled'}>${p.stock?'Sumar':'Sin stock'}</button></div>
+    </div>
+  </article>`;
+}
+const paint=(el,list)=>{el.innerHTML=list.map(card).join('');};
+function paintFamilies(){
+  $('#filter-families').innerHTML=FAMILIES.map(f=>`<label><input type="checkbox" class="f-family" name="familia" value="${f}" ${state.families.has(f)?'checked':''}> ${f} <span class="muted" style="font-size:10.5px">(${familyCount(f)})</span></label>`).join('');
+}
+function renderHome(){
+  $('#home-cats').innerHTML=FAMILIES.map((f,i)=>{
+    const img=PRODUCTS.find(p=>p.family===f).img;
+    return `<a class="cat-card" href="#/catalogo?familia=${encodeURIComponent(f)}" data-family="${f}">
+      <img src="${IMG}${img}" alt="" loading="lazy" width="300" height="188">
+      <div class="body"><span class="n">0${i+1}</span><h3>${f}</h3><span>${familyCount(f)} productos de ejemplo</span></div>
+    </a>`;
+  }).join('');
+  const featured=PRODUCTS.filter(p=>p.offer).concat(PRODUCTS.filter(p=>!p.offer&&p.stock));
+  paint($('#home-featured'),featured.slice(0,4));
+}
+function filtered(){
+  let list=PRODUCTS.slice();const q=state.q.trim().toLowerCase();
+  if(q)list=list.filter(p=>(p.name+' '+p.sku+' '+p.family+' '+p.pres).toLowerCase().includes(q));
+  if(state.families.size)list=list.filter(p=>state.families.has(p.family));
+  if(state.stockOnly)list=list.filter(p=>p.stock);
+  if(state.offerOnly)list=list.filter(p=>p.offer);
+  if(state.sort==='price-asc')list.sort((a,b)=>a.price-b.price);
+  if(state.sort==='price-desc')list.sort((a,b)=>b.price-a.price);
+  if(state.sort==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'es'));
+  return list;
+}
+function renderCatalog(){
+  const grid=$('#cat-grid'),list=filtered();
+  $('#cat-count').textContent=state.sim==='normal'?list.length+(list.length===1?' producto de ejemplo':' productos de ejemplo'):'';
+  const chips=[];
+  if(state.q)chips.push(`<span class="chip">“${esc(state.q)}” <button type="button" data-drop="q" aria-label="Quitar búsqueda">×</button></span>`);
+  state.families.forEach(f=>chips.push(`<span class="chip">${esc(f)} <button type="button" data-drop="family" data-value="${esc(f)}" aria-label="Quitar ${esc(f)}">×</button></span>`));
+  if(state.stockOnly)chips.push('<span class="chip">Disponibles <button type="button" data-drop="stock" aria-label="Quitar disponibilidad">×</button></span>');
+  if(state.offerOnly)chips.push('<span class="chip">Ofertas <button type="button" data-drop="offer" aria-label="Quitar ofertas">×</button></span>');
+  $('#chips').innerHTML=chips.join('');
+  if(state.sim==='loading'){grid.innerHTML=Array.from({length:4}).map(()=>'<div class="skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>').join('');return;}
+  if(state.sim==='error'){grid.innerHTML=`<div class="errorbox" role="alert"><h2>No pudimos cargar el catálogo</h2><p>Estado simulado para probar la recuperación. En producción vendría de la lista del negocio.</p><button type="button" class="btn" data-retry>Reintentar</button></div>`;return;}
+  if(!list.length){grid.innerHTML=`<div class="empty"><h2>Sin resultados</h2><p>Probá otro término o quitá filtros. La búsqueda incluye nombre, código, familia y presentación.</p><button type="button" class="btn line" id="empty-clear">Limpiar filtros</button></div>`;return;}
+  paint(grid,list);
+}
+function clearFilters(){
+  state.q='';state.families.clear();state.stockOnly=false;state.offerOnly=false;state.sort='relevance';
+  $('#q').value='';$('#f-stock').checked=false;$('#f-offer').checked=false;$('#sort').value='relevance';
+  paintFamilies();renderCatalog();
+}
+function renderDetail(){
+  const p=bySku(state.detailSku),root=$('#detail-root');if(!p)return;
+  $('#crumb-name').textContent=p.name;
+  root.innerHTML=`<div class="detail">
+    <figure class="detail-fig"><img src="${IMG}${p.img}" alt="${esc(p.name)} — imagen de referencia del rubro" width="700" height="700"><figcaption>Imagen de referencia de rubro. No es una foto del producto comercializado.</figcaption></figure>
+    <div>
+      <span class="kicker">${esc(p.family)} · ${esc(p.type)}</span>
+      <h1 id="h-producto" tabindex="-1">${esc(p.name)}</h1>
+      <div class="sku">Código ${p.sku} · código de maqueta</div>
+      <div class="price-box">
+        <div class="big">${money(p.price)}<span class="sim">simulado</span></div>
+        <p class="note">Precio de ejemplo (simulado). Lista vigente y visibilidad: <span class="ph">{{price_visibility}}</span>.</p>
+      </div>
+      <p class="stock-line ${p.stock?'':'out'}">${p.stock?'Disponible en la maqueta · stock real a confirmar':'Sin stock (ejemplo) · consultá reposición'}</p>
+      <label class="qty-label" for="qty">Cantidad</label>
+      <div class="qty"><button type="button" data-step="-1" aria-label="Restar una unidad">−</button><input id="qty" type="number" min="1" step="1" value="${state.detailQty}" aria-describedby="qty-help"><button type="button" data-step="1" aria-label="Sumar una unidad">+</button></div>
+      <p class="note" id="qty-help" style="margin-top:5px">Mínimo y paso de la maqueta: 1 unidad. Reglas reales: <span class="ph">{{minimum_quantity}}</span> / <span class="ph">{{quantity_step}}</span>.</p>
+      <div class="add-row"><button type="button" class="btn" data-add-detail="${p.sku}" ${p.stock?'':'disabled'}>Sumar a la consulta</button><a class="btn line" href="#/cotizacion">Ver consulta</a></div>
+      <p class="inline-note" id="detail-note" role="status" aria-live="polite"></p>
+      <p style="font-size:14px">${esc(p.desc)}</p>
+      <table class="spec-table"><tbody>
+        <tr><th>Presentación</th><td>${esc(p.pres)}</td></tr>
+        <tr><th>Unidad de venta</th><td>${esc(p.type)}</td></tr>
+        <tr><th>Disponibilidad</th><td>${p.stock?'Disponible (ejemplo)':'Agotado (ejemplo)'}</td></tr>
+        <tr><th>Mínimo de compra</th><td><span class="ph">{{minimum_quantity}}</span></td></tr>
+        <tr><th>Paso de cantidad</th><td><span class="ph">{{quantity_step}}</span></td></tr>
+        <tr><th>Origen del catálogo</th><td><span class="ph">{{data_sources}}</span></td></tr>
+      </tbody></table>
+      <ul class="rules"><li>Precios y stock de ejemplo.</li><li>La consulta no reserva mercadería.</li><li>Bultos y formas de pago: <span class="ph">{{order_rules}}</span>.</li></ul>
+    </div>
+  </div>`;
+  const rel=PRODUCTS.filter(x=>x.family===p.family&&x.sku!==p.sku).slice(0,4);
+  $('#related').innerHTML=rel.length?rel.map(card).join(''):'<p class="note">Sin otros productos de ejemplo en esta familia.</p>';
+  $('#related-wrap').hidden=false;
+}
+function cartLines(){return Object.entries(state.cart).map(([sku,qty])=>({p:bySku(sku),qty})).filter(x=>x.p);}
+function renderQuote(){
+  const root=$('#quote-root'),lines=cartLines();
+  if(!lines.length){root.innerHTML=`<div class="quote-empty"><h2>Tu consulta está vacía</h2><p>Sumá productos desde el catálogo para preparar un mensaje con códigos y cantidades. No se envía nada automáticamente.</p><a class="btn" href="#/catalogo">Ir al catálogo</a></div>`;return;}
+  const total=lines.reduce((a,l)=>a+l.p.price*l.qty,0);
+  root.innerHTML=`<div class="quote-wrap">
+    <div>
+      <div class="lines">${lines.map(({p,qty})=>`<div class="line">
+        <img src="${IMG}${p.img}" alt="" width="76" height="66">
+        <div><h3>${esc(p.name)}</h3><div class="meta">${p.sku} · ${esc(p.pres)}</div>
+          <div class="qty"><button type="button" data-line-step="-1" data-sku="${p.sku}" aria-label="Restar una unidad de ${esc(p.name)}">−</button><input type="number" min="1" step="1" value="${qty}" name="cantidad-${p.sku}" data-line-qty="${p.sku}" aria-label="Cantidad de ${esc(p.name)}"><button type="button" data-line-step="1" data-sku="${p.sku}" aria-label="Sumar una unidad de ${esc(p.name)}">+</button></div>
+        </div>
+        <div class="right"><span class="sub">${money(p.price*qty)}</span><button type="button" class="link-btn" data-remove="${p.sku}">Quitar</button></div>
+      </div>`).join('')}</div>
+      <div class="field"><label for="delivery">Entrega</label><select id="delivery"><option value="retiro" ${state.delivery==='retiro'?'selected':''}>Retiro en el local (a confirmar)</option><option value="envio" ${state.delivery==='envio'?'selected':''}>Envío (a confirmar)</option></select></div>
+      <div class="field"><label for="obs">Observaciones</label><textarea id="obs" maxlength="400" placeholder="Ej.: consulto por bultos cerrados y formas de pago.">${esc(state.obs)}</textarea></div>
+      <p class="note">Importes de ejemplo. Impuestos: <span class="ph">{{tax_display_policy}}</span>. Entrega: <span class="ph">{{fulfillment_policy}}</span>.</p>
+    </div>
+    <aside class="summary" aria-label="Resumen">
+      <h2>Resumen</h2>
+      <div class="sum-row"><span>Ítems</span><strong>${countUnits()}</strong></div>
+      <div class="sum-row"><span>Subtotal (simulado)</span><strong>${money(total)}</strong></div>
+      <div class="sum-row"><span>Impuestos</span><strong>{{tax_display_policy}}</strong></div>
+      <div class="sum-row"><span>Entrega</span><strong>A confirmar</strong></div>
+      <div class="sum-total"><span>Total estimado</span><span>${money(total)}</span></div>
+      <p class="note">No incluye impuestos, descuentos ni flete.</p>
+      <button type="button" class="btn block" id="prepare" ${state.success?'disabled':''}>${state.success?'Mensaje preparado':'Preparar WhatsApp'}</button>
+      <div id="success-slot">${state.success?'<div class="success" role="status"><strong>Solicitud preparada (no enviada)</strong>Se abrió WhatsApp con el detalle. El local confirma disponibilidad, precio y entrega.</div>':''}</div>
+      <p class="note">El número no está confirmado como WhatsApp activo. Verificá antes de enviar.</p>
+    </aside>
+  </div>`;
+}
+function waMessage(){
+  const rows=cartLines().map(({p,qty})=>`• ${qty} × ${p.sku} · ${p.name} (${p.pres})`).join('\n');
+  const entrega=state.delivery==='retiro'?'Retiro en el local (a confirmar)':'Envío (a confirmar)';
+  return `Hola Distribuidora San Esteban, quiero consultar por este pedido:\n${rows}\n\nEntrega: ${entrega}${state.obs.trim()?'\nObservaciones: '+state.obs.trim():''}\n\nEs una solicitud de la maqueta; queda sujeta a confirmación.`;
+}
+const PAGES=['inicio','catalogo','producto','cotizacion','contacto'];
+function route(){
+  const raw=location.hash.replace(/^#\/?/,'');const [path,query]=raw.split('?');const parts=path.split('/');
+  let page=parts[0]||'inicio';if(!PAGES.includes(page))page='inicio';
+  if(page==='catalogo'&&query){const params=new URLSearchParams(query);if(params.get('q')!==null){state.q=params.get('q');$('#q').value=state.q;}if(params.get('familia'))state.families=new Set([params.get('familia')]);if(params.get('oferta')==='1'){state.offerOnly=true;$('#f-offer').checked=true;}}
+  if(page==='producto'){const p=bySku(parts[1]);if(!p){location.hash='#/catalogo';return;}state.detailSku=p.sku;state.detailQty=1;renderDetail();}
+  $$('section.page').forEach(s=>s.hidden=s.id!=='page-'+page);
+  $$('[data-nav]').forEach(a=>{const on=a.dataset.nav===page||(page==='producto'&&a.dataset.nav==='catalogo');if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(page==='inicio')renderHome();
+  if(page==='catalogo'){paintFamilies();renderCatalog();}
+  if(page==='cotizacion')renderQuote();
+  const h=$('section.page:not([hidden]) h1');if(h)h.focus({preventScroll:true});
+  window.scrollTo({top:0,behavior:'auto'});
+}
+window.addEventListener('hashchange',route);
+function addToCart(sku,qty=1){state.cart[sku]=(state.cart[sku]||0)+qty;updateBadge();toast('Sumado a la consulta (demo) · '+bySku(sku).name);}
+function gotoCatalog(family){state.families=new Set([family]);location.hash='#/catalogo';if(location.hash==='#/catalogo')route();}
+
+$('#search-form').addEventListener('submit',e=>{e.preventDefault();state.q=$('#q').value.trim();if(location.hash==='#/catalogo')renderCatalog();else location.hash='#/catalogo';});
+document.addEventListener('click',e=>{
+  const fam=e.target.closest('[data-family]');if(fam){e.preventDefault();gotoCatalog(fam.dataset.family);return;}
+  const add=e.target.closest('[data-add]');if(add){addToCart(add.dataset.add);return;}
+  const ad=e.target.closest('[data-add-detail]');if(ad){addToCart(ad.dataset.addDetail,state.detailQty);$('#detail-note').textContent='Sumado a la consulta (demo).';return;}
+  const st=e.target.closest('[data-step]');if(st){const input=$('#qty');let v=parseInt(input.value,10)||1;v=Math.max(1,Math.min(999,v+parseInt(st.dataset.step,10)));input.value=v;state.detailQty=v;return;}
+  const ls=e.target.closest('[data-line-step]');if(ls){const sku=ls.dataset.sku;state.cart[sku]=Math.max(1,Math.min(999,(state.cart[sku]||1)+parseInt(ls.dataset.lineStep,10)));updateBadge();renderQuote();return;}
+  const rm=e.target.closest('[data-remove]');if(rm){delete state.cart[rm.dataset.remove];state.success=false;updateBadge();renderQuote();toast('Producto quitado');return;}
+  const sim=e.target.closest('[data-sim]');if(sim){state.sim=sim.dataset.sim;$$('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',String(b===sim)));renderCatalog();return;}
+  if(e.target.closest('[data-retry]')){state.sim='normal';$$('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sim==='normal')));renderCatalog();return;}
+  if(e.target.closest('#empty-clear')){clearFilters();return;}
+  const drop=e.target.closest('[data-drop]');if(drop){const k=drop.dataset.drop;if(k==='q'){state.q='';$('#q').value='';}if(k==='family'){state.families.delete(drop.dataset.value);paintFamilies();}if(k==='stock'){state.stockOnly=false;$('#f-stock').checked=false;}if(k==='offer'){state.offerOnly=false;$('#f-offer').checked=false;}renderCatalog();return;}
+  if(e.target.closest('#prepare')){
+    const btn=$('#prepare');btn.disabled=true;btn.textContent='Preparando mensaje…';
+    setTimeout(()=>{state.success=true;window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(waMessage()),'_blank','noopener');renderQuote();const s=$('#success-slot');if(s)s.scrollIntoView({block:'nearest'});},650);
+    return;
+  }
+});
+$('#clear-filters').addEventListener('click',clearFilters);
+document.addEventListener('change',e=>{
+  if(e.target.classList.contains('f-family')){const v=e.target.value;if(e.target.checked)state.families.add(v);else state.families.delete(v);renderCatalog();}
+  if(e.target.id==='f-stock'){state.stockOnly=e.target.checked;renderCatalog();}
+  if(e.target.id==='f-offer'){state.offerOnly=e.target.checked;renderCatalog();}
+  if(e.target.id==='sort'){state.sort=e.target.value;renderCatalog();}
+  if(e.target.id==='delivery')state.delivery=e.target.value;
+  if(e.target.id==='obs')state.obs=e.target.value;
+  if(e.target.id==='qty'){let v=parseInt(e.target.value,10);if(isNaN(v)||v<1)v=1;if(v>999)v=999;e.target.value=v;state.detailQty=v;}
+  if(e.target.matches('[data-line-qty]')){const sku=e.target.dataset.lineQty;let v=parseInt(e.target.value,10);if(isNaN(v)||v<1)v=1;if(v>999)v=999;state.cart[sku]=v;updateBadge();renderQuote();}
+});
+paintFamilies();updateBadge();route();
+</script>
+</body>
+</html>
+
+
